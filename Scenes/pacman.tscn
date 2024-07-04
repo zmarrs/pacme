@@ -1,0 +1,17 @@
+[gd_scene load_steps=5 format=3 uid="uid://dlsuwh527oo6m"]
+
+[ext_resource type="Script" path="res://Scenes/game_manager.gd" id="1_81req"]
+[ext_resource type="PackedScene" uid="uid://krsbwx60d6pp" path="res://Scenes/level_1.tscn" id="1_ra25w"]
+[ext_resource type="PackedScene" uid="uid://lom7lejnq4c7" path="res://Scenes/main_menu.tscn" id="3_ydmew"]
+[ext_resource type="PackedScene" uid="uid://csi021jfc6q6a" path="res://Scenes/high_scores.tscn" id="4_xoq6q"]
+
+[node name="Main" type="Node"]
+
+[node name="MainMenu" parent="." instance=ExtResource("3_ydmew")]
+
+[node name="GameManager" type="Node" parent="."]
+script = ExtResource("1_81req")
+
+[node name="Level1" parent="." instance=ExtResource("1_ra25w")]
+
+[node name="HighScores" parent="." instance=ExtResource("4_xoq6q")]

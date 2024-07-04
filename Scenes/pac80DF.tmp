@@ -1,0 +1,14 @@
+[gd_scene load_steps=4 format=3 uid="uid://dlsuwh527oo6m"]
+
+[ext_resource type="PackedScene" uid="uid://krsbwx60d6pp" path="res://level_1.tscn" id="1_ra25w"]
+[ext_resource type="Script" path="res://Scenes/points_manager.gd" id="2_qc0fr"]
+[ext_resource type="PackedScene" uid="uid://cmyf0ugk6j2ux" path="res://Scenes/canvas_ui.tscn" id="3_urfhl"]
+
+[node name="main" type="Node"]
+
+[node name="UI" parent="." instance=ExtResource("3_urfhl")]
+
+[node name="PointsManager" type="Node" parent="."]
+script = ExtResource("2_qc0fr")
+
+[node name="Level1" parent="." instance=ExtResource("1_ra25w")]

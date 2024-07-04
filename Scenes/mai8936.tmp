@@ -1,0 +1,141 @@
+[gd_scene load_steps=9 format=3 uid="uid://lom7lejnq4c7"]
+
+[ext_resource type="Theme" uid="uid://veh2p1lln2ov" path="res://label_theme.tres" id="1_enn5j"]
+[ext_resource type="Script" path="res://Scenes/main_menu.gd" id="1_n3d2n"]
+[ext_resource type="FontFile" uid="uid://ccnln6n4c0g54" path="res://Assets/Fonts/upheavtt.ttf" id="2_bf5mv"]
+[ext_resource type="Script" path="res://Scenes/swipe_detector.gd" id="2_v83c5"]
+[ext_resource type="Texture2D" uid="uid://bxsvffd05hs75" path="res://Assets/Pacman/logo.png" id="3_1h63q"]
+[ext_resource type="AudioStream" uid="uid://b3h55w150ow8p" path="res://Assets/Sounds/pacman_beginning.wav" id="5_ninqn"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_optdc"]
+bg_color = Color(0, 0, 0, 1)
+border_width_left = 4
+border_width_top = 4
+border_width_right = 4
+border_width_bottom = 4
+border_color = Color(1, 1, 1, 1)
+corner_radius_top_left = 8
+corner_radius_top_right = 8
+corner_radius_bottom_right = 8
+corner_radius_bottom_left = 8
+
+[sub_resource type="Theme" id="Theme_odduk"]
+default_font = ExtResource("2_bf5mv")
+default_font_size = 40
+
+[node name="MainMenu" type="Control"]
+layout_mode = 3
+anchors_preset = 0
+script = ExtResource("1_n3d2n")
+
+[node name="Camera2D" type="Camera2D" parent="."]
+script = ExtResource("2_v83c5")
+
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+
+[node name="MarginContainer" type="MarginContainer" parent="CanvasLayer"]
+offset_right = 1151.0
+offset_bottom = 647.0
+theme_override_constants/margin_left = 0
+theme_override_constants/margin_top = 0
+theme_override_constants/margin_right = 0
+theme_override_constants/margin_bottom = 0
+
+[node name="VBoxContainer" type="VBoxContainer" parent="CanvasLayer/MarginContainer"]
+layout_mode = 2
+theme = ExtResource("1_enn5j")
+
+[node name="MarginContainer" type="MarginContainer" parent="CanvasLayer/MarginContainer/VBoxContainer"]
+layout_mode = 2
+theme_override_constants/margin_left = 1
+theme_override_constants/margin_top = 409
+
+[node name="AnyButtonLabel" type="Label" parent="CanvasLayer/MarginContainer/VBoxContainer/MarginContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_fonts/font = ExtResource("2_bf5mv")
+theme_override_font_sizes/font_size = 36
+text = " Press any button"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Sprite2D" type="Sprite2D" parent="CanvasLayer/MarginContainer/VBoxContainer/MarginContainer"]
+position = Vector2(574, 270)
+scale = Vector2(0.572289, 0.572289)
+texture = ExtResource("3_1h63q")
+
+[node name="SpacerLabel" type="Label" parent="CanvasLayer/MarginContainer/VBoxContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_fonts/font = ExtResource("2_bf5mv")
+theme_override_font_sizes/font_size = 36
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="SpacerLabel2" type="Label" parent="CanvasLayer/MarginContainer/VBoxContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_fonts/font = ExtResource("2_bf5mv")
+theme_override_font_sizes/font_size = 36
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="HighScoreLabel" type="Label" parent="CanvasLayer/MarginContainer/VBoxContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_fonts/font = ExtResource("2_bf5mv")
+theme_override_font_sizes/font_size = 30
+text = " High Score"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="HighScoreText" type="Label" parent="CanvasLayer/MarginContainer/VBoxContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_fonts/font = ExtResource("2_bf5mv")
+theme_override_font_sizes/font_size = 26
+text = " 9990"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="HighScoreNameText" type="Label" parent="CanvasLayer/MarginContainer/VBoxContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_fonts/font = ExtResource("2_bf5mv")
+theme_override_font_sizes/font_size = 26
+text = " ZAP"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="CenterContainer" type="CenterContainer" parent="CanvasLayer/MarginContainer"]
+visible = false
+layout_mode = 2
+
+[node name="Panel" type="Panel" parent="CanvasLayer/MarginContainer/CenterContainer"]
+custom_minimum_size = Vector2(300, 200)
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_optdc")
+
+[node name="GameLabel" type="Label" parent="CanvasLayer/MarginContainer/CenterContainer/Panel"]
+unique_name_in_owner = true
+texture_filter = 1
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -20.0
+offset_top = -11.5
+offset_right = 20.0
+offset_bottom = 11.5
+grow_horizontal = 2
+grow_vertical = 2
+theme = SubResource("Theme_odduk")
+text = "Level Won!"
+vertical_alignment = 1
+
+[node name="MusicAudioStreamPlayer2D" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("5_ninqn")
+volume_db = -8.0
+autoplay = true

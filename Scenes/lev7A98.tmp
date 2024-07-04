@@ -1,0 +1,1960 @@
+[gd_scene load_steps=39 format=3 uid="uid://krsbwx60d6pp"]
+
+[ext_resource type="Texture2D" uid="uid://drkis1u8g6das" path="res://Assets/Walls/wall_atlas_test.png" id="1_ndfhj"]
+[ext_resource type="Script" path="res://Scenes/tilemap.gd" id="2_shsqs"]
+[ext_resource type="PackedScene" uid="uid://bwiygmimfewrp" path="res://Scenes/connector.tscn" id="3_lpaoa"]
+[ext_resource type="PackedScene" uid="uid://cmyf0ugk6j2ux" path="res://Scenes/canvas_ui.tscn" id="4_vji5h"]
+[ext_resource type="PackedScene" uid="uid://cgplc67at87uu" path="res://Scenes/player.tscn" id="5_n52ap"]
+[ext_resource type="Script" path="res://Scenes/pellets_manager.gd" id="6_6gf5c"]
+[ext_resource type="PackedScene" uid="uid://qv2808sdbkhi" path="res://Scenes/pellet.tscn" id="7_ns0wm"]
+[ext_resource type="PackedScene" uid="uid://b3imtm70ge78i" path="res://Scenes/large_pellet.tscn" id="8_yfcxs"]
+[ext_resource type="Script" path="res://Scenes/ghosts.gd" id="9_y7gy6"]
+[ext_resource type="PackedScene" uid="uid://dscd0286gs6ii" path="res://Scenes/ghost.tscn" id="10_tv2mt"]
+[ext_resource type="Texture2D" uid="uid://bwh3pnp6rcycn" path="res://Assets/Ghost/Ghost_Body_01.png" id="11_dyu2c"]
+[ext_resource type="Script" path="res://Scenes/points_manager.gd" id="12_oudmb"]
+[ext_resource type="AudioStream" uid="uid://bu756i3lh25h3" path="res://Assets/Sounds/pacman_chomp.wav" id="13_mq0d8"]
+[ext_resource type="AudioStream" uid="uid://100ohtpyo02o" path="res://Assets/Sounds/pacman_eatghost.wav" id="14_idy24"]
+[ext_resource type="AudioStream" uid="uid://c4b0pvuyylv4a" path="res://Assets/Sounds/pacman_power_pellet.wav" id="15_7twg0"]
+[ext_resource type="AudioStream" uid="uid://bnxugtt2eriq0" path="res://Assets/Sounds/pacman_death.wav" id="16_jb542"]
+[ext_resource type="PackedScene" uid="uid://bh82wjuv05xha" path="res://Scenes/fruit_spawner.tscn" id="17_l2tnd"]
+[ext_resource type="AudioStream" uid="uid://ki4xrux6kwcr" path="res://Assets/Sounds/pacman_eatfruit.wav" id="18_2w32i"]
+[ext_resource type="AudioStream" uid="uid://dy41jccxo6uhk" path="res://Assets/Sounds/pacman_extrapac.wav" id="19_vqghn"]
+[ext_resource type="AudioStream" uid="uid://ddys10o68x6yt" path="res://Assets/Sounds/pacman_intermission.wav" id="20_wla1l"]
+
+[sub_resource type="NavigationPolygon" id="NavigationPolygon_qkpwu"]
+vertices = PackedVector2Array(12, 12, 11, 12, 11, -12, 12, -12)
+polygons = Array[PackedInt32Array]([PackedInt32Array(0, 1, 2, 3)])
+outlines = Array[PackedVector2Array]([PackedVector2Array(10.5, -12, 12, -12, 12, 12, 10.5, 12)])
+source_geometry_group_name = &"navigation_polygon_source_group"
+agent_radius = 0.0
+
+[sub_resource type="NavigationPolygon" id="NavigationPolygon_83dwy"]
+vertices = PackedVector2Array(-11, 12, -12, 12, -12, -12, -11, -12)
+polygons = Array[PackedInt32Array]([PackedInt32Array(0, 1, 2, 3)])
+outlines = Array[PackedVector2Array]([PackedVector2Array(-12, -12, -10.5, -12, -10.5, 12, -12, 12)])
+source_geometry_group_name = &"navigation_polygon_source_group"
+agent_radius = 0.0
+
+[sub_resource type="NavigationPolygon" id="NavigationPolygon_mh34o"]
+vertices = PackedVector2Array(2, -2, 12, -2, 12, 2, 2, 2, 2, 12, -2, 12, -2, 2, -2, -2, -12, 2, -12, -2, 2, -12, -2, -12)
+polygons = Array[PackedInt32Array]([PackedInt32Array(0, 1, 2, 3), PackedInt32Array(3, 4, 5, 6), PackedInt32Array(0, 3, 6, 7), PackedInt32Array(6, 8, 9, 7), PackedInt32Array(10, 0, 7, 11)])
+outlines = Array[PackedVector2Array]([PackedVector2Array(-1.5, -12, 1.5, -12, 1.5, -1.5026, 12, -1.5, 12, 1.5, 1.5, 1.5, 1.5, 12, -1.5, 12, -1.5, 1.5, -12, 1.5, -12, -1.5, -1.5, -1.5)])
+source_geometry_group_name = &"navigation_polygon_source_group"
+agent_radius = 0.0
+
+[sub_resource type="NavigationPolygon" id="NavigationPolygon_ey67w"]
+vertices = PackedVector2Array(2, 12, -2, 12, -2, -12, 2, -12)
+polygons = Array[PackedInt32Array]([PackedInt32Array(0, 1, 2, 3)])
+outlines = Array[PackedVector2Array]([PackedVector2Array(-1.5, -12, 1.5, -12, 1.5, 12, -1.5, 12)])
+source_geometry_group_name = &"navigation_polygon_source_group"
+agent_radius = 0.0
+
+[sub_resource type="NavigationPolygon" id="NavigationPolygon_2cjek"]
+vertices = PackedVector2Array(2, -2, 12, -2, 12, 2, 2, 2, -2, 2, -2, -12, 2, -12)
+polygons = Array[PackedInt32Array]([PackedInt32Array(0, 1, 2, 3), PackedInt32Array(0, 3, 4, 5), PackedInt32Array(6, 0, 5)])
+outlines = Array[PackedVector2Array]([PackedVector2Array(12, 1.5, 1.5, 1.5, -1.5, 1.5, -1.5, -12, 1.5, -12, 1.5, -1.5, 12, -1.5)])
+source_geometry_group_name = &"navigation_polygon_source_group"
+agent_radius = 0.0
+
+[sub_resource type="NavigationPolygon" id="NavigationPolygon_cpov6"]
+vertices = PackedVector2Array(12, 12, -12, 12, -12, -12, 12, -12)
+polygons = Array[PackedInt32Array]([PackedInt32Array(0, 1, 2, 3)])
+outlines = Array[PackedVector2Array]([PackedVector2Array(-12, -12, 12, -12, 12, 12, -12, 12)])
+source_geometry_group_name = &"navigation_polygon_source_group"
+agent_radius = 0.0
+
+[sub_resource type="NavigationPolygon" id="NavigationPolygon_a4ghr"]
+vertices = PackedVector2Array(12, 3, 12, 12, 9, 12, 9, 3, 12, -3, -12, -3, -12, 3)
+polygons = Array[PackedInt32Array]([PackedInt32Array(0, 1, 2, 3), PackedInt32Array(4, 0, 3, 5), PackedInt32Array(5, 3, 6)])
+outlines = Array[PackedVector2Array]([PackedVector2Array(-12, -3, 12, -3, 12, 3, 12, 12, 9, 12, 9, 3, -12, 3)])
+source_geometry_group_name = &"navigation_polygon_source_group"
+agent_radius = 0.0
+
+[sub_resource type="NavigationPolygon" id="NavigationPolygon_2cp0e"]
+vertices = PackedVector2Array(12, -3, 12, 3, -9, 3, -12, -3, -12, 12, -9, 12)
+polygons = Array[PackedInt32Array]([PackedInt32Array(0, 1, 2, 3), PackedInt32Array(4, 3, 2, 5)])
+outlines = Array[PackedVector2Array]([PackedVector2Array(-12, -3, 12, -3, 12, 3, -9, 3, -9, 12, -12, 12)])
+source_geometry_group_name = &"navigation_polygon_source_group"
+agent_radius = 0.0
+
+[sub_resource type="NavigationPolygon" id="NavigationPolygon_veext"]
+vertices = PackedVector2Array(12, 2, -12, 2, -12, -2, 12, -2)
+polygons = Array[PackedInt32Array]([PackedInt32Array(0, 1, 2, 3)])
+outlines = Array[PackedVector2Array]([PackedVector2Array(-12, -1.5, 12, -1.5, 12, 1.5, -12, 1.5)])
+source_geometry_group_name = &"navigation_polygon_source_group"
+agent_radius = 0.0
+
+[sub_resource type="NavigationPolygon" id="NavigationPolygon_82nxb"]
+vertices = PackedVector2Array(2, -12, 2, 12, -2, 12, -2, 2, -12, 2, -12, -2, -2, -2, -2, -12)
+polygons = Array[PackedInt32Array]([PackedInt32Array(0, 1, 2, 3), PackedInt32Array(3, 4, 5, 6), PackedInt32Array(0, 3, 6), PackedInt32Array(0, 6, 7)])
+outlines = Array[PackedVector2Array]([PackedVector2Array(-12, -1.5, -1.5, -1.5, -1.5, -12, 1.5, -12, 1.5, 12, -1.5, 12, -1.5, 1.5, -12, 1.5)])
+source_geometry_group_name = &"navigation_polygon_source_group"
+agent_radius = 0.0
+
+[sub_resource type="NavigationPolygon" id="NavigationPolygon_vn0r2"]
+vertices = PackedVector2Array(2, -2, 12, -2, 12, 2, -12, 2, -12, -2, -2, -2, 2, -12, -2, -12)
+polygons = Array[PackedInt32Array]([PackedInt32Array(0, 1, 2, 3), PackedInt32Array(3, 4, 5), PackedInt32Array(0, 3, 5), PackedInt32Array(6, 0, 5, 7)])
+outlines = Array[PackedVector2Array]([PackedVector2Array(1.5, -12, 1.5, -1.5, 12, -1.5, 12, 1.5, -12, 1.5, -12, -1.5, -1.5, -1.5, -1.5, -12)])
+source_geometry_group_name = &"navigation_polygon_source_group"
+agent_radius = 0.0
+
+[sub_resource type="NavigationPolygon" id="NavigationPolygon_hf247"]
+vertices = PackedVector2Array(2, -2, 12, -2, 12, 2, 2, 2, 2, 12, -2, 12, -2, -12, 2, -12)
+polygons = Array[PackedInt32Array]([PackedInt32Array(0, 1, 2, 3), PackedInt32Array(3, 4, 5, 6), PackedInt32Array(0, 3, 6), PackedInt32Array(7, 0, 6)])
+outlines = Array[PackedVector2Array]([PackedVector2Array(12, 1.5, 1.5, 1.5, 1.5, 12, -1.5, 12, -1.5, -12, 1.5, -12, 1.5, -1.5, 12, -1.5)])
+source_geometry_group_name = &"navigation_polygon_source_group"
+agent_radius = 0.0
+
+[sub_resource type="NavigationPolygon" id="NavigationPolygon_bnfkn"]
+vertices = PackedVector2Array(12, -2, 12, 2, 2, 2, -12, -2, 2, 12, -2, 12, -2, 2, -12, 2)
+polygons = Array[PackedInt32Array]([PackedInt32Array(0, 1, 2, 3), PackedInt32Array(2, 4, 5, 6), PackedInt32Array(3, 2, 6), PackedInt32Array(3, 6, 7)])
+outlines = Array[PackedVector2Array]([PackedVector2Array(-1.5, 12, -1.5, 1.5, -12, 1.5, -12, -1.5, 12, -1.5, 12, 1.5, 1.5, 1.5, 1.5, 12)])
+source_geometry_group_name = &"navigation_polygon_source_group"
+agent_radius = 0.0
+
+[sub_resource type="NavigationPolygon" id="NavigationPolygon_7v2yb"]
+vertices = PackedVector2Array(12, -2, 12, 2, 2, 2, -2, -2, -2, 2, 2, 12, -2, 12)
+polygons = Array[PackedInt32Array]([PackedInt32Array(0, 1, 2, 3), PackedInt32Array(4, 3, 2, 5), PackedInt32Array(4, 5, 6)])
+outlines = Array[PackedVector2Array]([PackedVector2Array(-1.5, 12, -1.5, 1.5, -1.5, -1.5, 12, -1.5, 12, 1.5, 1.5, 1.5, 1.5, 12)])
+source_geometry_group_name = &"navigation_polygon_source_group"
+agent_radius = 0.0
+
+[sub_resource type="NavigationPolygon" id="NavigationPolygon_ibbsi"]
+vertices = PackedVector2Array(2, -2, 2, 12, -2, 12, -2, 2, -2, -2, -12, 2, -12, -2)
+polygons = Array[PackedInt32Array]([PackedInt32Array(0, 1, 2, 3), PackedInt32Array(4, 0, 3, 5), PackedInt32Array(4, 5, 6)])
+outlines = Array[PackedVector2Array]([PackedVector2Array(-12, -1.5, -1.5, -1.5, 1.5, -1.5, 1.5, 12, -1.5, 12, -1.5, 1.5, -12, 1.5)])
+source_geometry_group_name = &"navigation_polygon_source_group"
+agent_radius = 0.0
+
+[sub_resource type="NavigationPolygon" id="NavigationPolygon_8c0uo"]
+vertices = PackedVector2Array(2, -2, 2, 2, -12, 2, -2, -2, -12, -2, 2, -12, -2, -12)
+polygons = Array[PackedInt32Array]([PackedInt32Array(0, 1, 2, 3), PackedInt32Array(2, 4, 3), PackedInt32Array(5, 0, 3, 6)])
+outlines = Array[PackedVector2Array]([PackedVector2Array(1.5, -12, 1.5, -1.5, 1.5, 1.5, -12, 1.5, -12, -1.5, -1.5, -1.5, -1.5, -12)])
+source_geometry_group_name = &"navigation_polygon_source_group"
+agent_radius = 0.0
+
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_ych7r"]
+texture = ExtResource("1_ndfhj")
+texture_region_size = Vector2i(32, 32)
+0:0/0 = 0
+0:0/0/physics_layer_0/linear_velocity = Vector2(0, 0)
+0:0/0/physics_layer_0/angular_velocity = 0.0
+0:0/0/physics_layer_0/polygon_0/points = PackedVector2Array(-12, 0, -3, 0, 3, 0.75, 6, 2.25, 7.5, 3.75, 8.25, 5.25, 9, 12, -12, 12)
+1:0/0 = 0
+1:0/0/physics_layer_0/linear_velocity = Vector2(0, 0)
+1:0/0/physics_layer_0/angular_velocity = 0.0
+1:0/0/physics_layer_0/polygon_0/points = PackedVector2Array(0.75, 0, 12, 0, 12, 12, -9, 12, -9, 6, -7.5, 3.75, -6, 2.25, -3.75, 0.75)
+2:0/0 = 0
+2:0/0/physics_layer_0/linear_velocity = Vector2(0, 0)
+2:0/0/physics_layer_0/angular_velocity = 0.0
+2:0/0/physics_layer_0/polygon_0/points = PackedVector2Array(-12, 0, 12, 0, 12, 3, -12, 3)
+3:0/0 = 0
+3:0/0/physics_layer_0/linear_velocity = Vector2(0, 0)
+3:0/0/physics_layer_0/angular_velocity = 0.0
+3:0/0/physics_layer_0/polygon_0/points = PackedVector2Array(-12, -3, 12, -3, 12, 0, -12, 0)
+4:0/0 = 0
+4:0/0/physics_layer_0/linear_velocity = Vector2(0, 0)
+4:0/0/physics_layer_0/angular_velocity = 0.0
+4:0/0/physics_layer_0/polygon_0/points = PackedVector2Array(-12, -12, 0, -12, 0, 12, -12, 12)
+5:0/0 = 0
+5:0/0/physics_layer_0/linear_velocity = Vector2(0, 0)
+5:0/0/physics_layer_0/angular_velocity = 0.0
+5:0/0/physics_layer_0/polygon_0/points = PackedVector2Array(12, -12, 3, -12, 3, 12, 12, 12)
+6:0/0 = 0
+6:0/0/physics_layer_0/linear_velocity = Vector2(0, 0)
+6:0/0/physics_layer_0/angular_velocity = 0.0
+6:0/0/physics_layer_0/polygon_0/points = PackedVector2Array(-12, 0, -6, 0, -3, 0.75, -1.5, 2.25, -0.75, 3.75, 0, 6, 0, 12, -12, 12)
+7:0/0 = 0
+7:0/0/physics_layer_0/linear_velocity = Vector2(0, 0)
+7:0/0/physics_layer_0/angular_velocity = 0.0
+7:0/0/physics_layer_0/polygon_0/points = PackedVector2Array(0, 12, 12, 12, 12, 0, 8.25, 0, 6, 0, 3, 1.5, 0.75, 3.75, 0, 6.75)
+8:0/0 = 0
+8:0/0/physics_layer_0/linear_velocity = Vector2(0, 0)
+8:0/0/physics_layer_0/angular_velocity = 0.0
+9:0/0 = 0
+9:0/0/physics_layer_0/linear_velocity = Vector2(0, 0)
+9:0/0/physics_layer_0/angular_velocity = 0.0
+10:0/0 = 0
+10:0/0/physics_layer_0/linear_velocity = Vector2(0, 0)
+10:0/0/physics_layer_0/angular_velocity = 0.0
+11:0/0 = 0
+11:0/0/physics_layer_0/linear_velocity = Vector2(0, 0)
+11:0/0/physics_layer_0/angular_velocity = 0.0
+12:0/0 = 0
+12:0/0/physics_layer_0/linear_velocity = Vector2(0, 0)
+12:0/0/physics_layer_0/angular_velocity = 0.0
+13:0/0 = 0
+13:0/0/physics_layer_0/linear_velocity = Vector2(0, 0)
+13:0/0/physics_layer_0/angular_velocity = 0.0
+14:0/0 = 0
+14:0/0/physics_layer_0/linear_velocity = Vector2(0, 0)
+14:0/0/physics_layer_0/angular_velocity = 0.0
+15:0/0 = 0
+15:0/0/physics_layer_0/linear_velocity = Vector2(0, 0)
+15:0/0/physics_layer_0/angular_velocity = 0.0
+0:1/0 = 0
+0:1/0/physics_layer_0/linear_velocity = Vector2(0, 0)
+0:1/0/physics_layer_0/angular_velocity = 0.0
+0:1/0/physics_layer_0/polygon_0/points = PackedVector2Array(0, -12, -12, -12, -12, 0, -8.25, 0, -6, 0, -3.75, -1.5, -1.5, -3.75, 0, -6.75)
+1:1/0 = 0
+1:1/0/physics_layer_0/linear_velocity = Vector2(0, 0)
+1:1/0/physics_layer_0/angular_velocity = 0.0
+1:1/0/physics_layer_0/polygon_0/points = PackedVector2Array(0, -12, 12, -12, 12, 0, 8.25, 0, 6, 0, 3.75, -1.5, 1.5, -3.75, 0, -6.75)
+2:1/0 = 0
+2:1/0/physics_layer_0/linear_velocity = Vector2(0, 0)
+2:1/0/physics_layer_0/angular_velocity = 0.0
+2:1/0/physics_layer_0/polygon_0/points = PackedVector2Array(-12, -12, 3, -12, 3, -3.75, 0, 0, -4.5, 3, -12, 3)
+3:1/0 = 0
+3:1/0/physics_layer_0/linear_velocity = Vector2(0, 0)
+3:1/0/physics_layer_0/angular_velocity = 0.0
+3:1/0/physics_layer_0/polygon_0/points = PackedVector2Array(-12, 12, -12, -3, -3.75, -3, -0.75, -2.25, 1.5, -0.75, 2.25, 1.5, 3, 4.5, 3, 12)
+4:1/0 = 0
+4:1/0/physics_layer_0/linear_velocity = Vector2(0, 0)
+4:1/0/physics_layer_0/angular_velocity = 0.0
+4:1/0/physics_layer_0/polygon_0/points = PackedVector2Array(12, -12, 12, 3, 3.75, 3, 1.5, 2.25, -0.75, 0.75, -2.25, -1.5, -3, -4.5, -3, -12)
+5:1/0 = 0
+5:1/0/physics_layer_0/linear_velocity = Vector2(0, 0)
+5:1/0/physics_layer_0/angular_velocity = 0.0
+5:1/0/physics_layer_0/polygon_0/points = PackedVector2Array(12, 12, -3, 12, -3, 3.75, 0, 0, 4.5, -3, 12, -3)
+6:1/0 = 0
+6:1/0/physics_layer_0/linear_velocity = Vector2(0, 0)
+6:1/0/physics_layer_0/angular_velocity = 0.0
+6:1/0/physics_layer_0/polygon_0/points = PackedVector2Array(-12, 0, -6, 0, -3, 0.75, -1.5, 2.25, -0.75, 3.75, 0, 6, 0, 12, -12, 12)
+7:1/0 = 0
+7:1/0/physics_layer_0/linear_velocity = Vector2(0, 0)
+7:1/0/physics_layer_0/angular_velocity = 0.0
+7:1/0/physics_layer_0/polygon_0/points = PackedVector2Array(0, 0, 12, 0, 12, 12, 0, 12)
+8:1/0 = 0
+8:1/0/physics_layer_0/linear_velocity = Vector2(0, 0)
+8:1/0/physics_layer_0/angular_velocity = 0.0
+9:1/0 = 0
+9:1/0/physics_layer_0/linear_velocity = Vector2(0, 0)
+9:1/0/physics_layer_0/angular_velocity = 0.0
+10:1/0 = 0
+10:1/0/physics_layer_0/linear_velocity = Vector2(0, 0)
+10:1/0/physics_layer_0/angular_velocity = 0.0
+11:1/0 = 0
+11:1/0/physics_layer_0/linear_velocity = Vector2(0, 0)
+11:1/0/physics_layer_0/angular_velocity = 0.0
+12:1/0 = 0
+12:1/0/physics_layer_0/linear_velocity = Vector2(0, 0)
+12:1/0/physics_layer_0/angular_velocity = 0.0
+13:1/0 = 0
+13:1/0/physics_layer_0/linear_velocity = Vector2(0, 0)
+13:1/0/physics_layer_0/angular_velocity = 0.0
+14:1/0 = 0
+14:1/0/physics_layer_0/linear_velocity = Vector2(0, 0)
+14:1/0/physics_layer_0/angular_velocity = 0.0
+15:1/0 = 0
+15:1/0/physics_layer_0/linear_velocity = Vector2(0, 0)
+15:1/0/physics_layer_0/angular_velocity = 0.0
+0:2/0 = 0
+0:2/0/physics_layer_0/linear_velocity = Vector2(0, 0)
+0:2/0/physics_layer_0/angular_velocity = 0.0
+0:2/0/physics_layer_0/polygon_0/points = PackedVector2Array(-12, -12, 0, -12, 0, 0, -12, 0)
+1:2/0 = 0
+1:2/0/physics_layer_0/linear_velocity = Vector2(0, 0)
+1:2/0/physics_layer_0/angular_velocity = 0.0
+1:2/0/physics_layer_0/polygon_0/points = PackedVector2Array(0, -12, 12, -12, 12, 0, 0, 0)
+2:2/next_alternative_id = 3
+2:2/0 = 0
+2:2/0/physics_layer_0/linear_velocity = Vector2(0, 0)
+2:2/0/physics_layer_0/angular_velocity = 0.0
+2:2/0/physics_layer_0/polygon_0/points = PackedVector2Array(-12, 0.75, 12, 0.75, 12, 9, -12, 9)
+2:2/1 = 1
+2:2/1/physics_layer_0/linear_velocity = Vector2(0, 0)
+2:2/1/physics_layer_0/angular_velocity = 0.0
+2:2/1/physics_layer_0/polygon_0/points = PackedVector2Array(-12, 0.75, 12, 0.75, 12, 9, -12, 9)
+2:2/1/navigation_layer_0/polygon = SubResource("NavigationPolygon_qkpwu")
+2:2/2 = 2
+2:2/2/physics_layer_0/linear_velocity = Vector2(0, 0)
+2:2/2/physics_layer_0/angular_velocity = 0.0
+2:2/2/physics_layer_0/polygon_0/points = PackedVector2Array(-12, 0.75, 12, 0.75, 12, 9, -12, 9)
+2:2/2/navigation_layer_0/polygon = SubResource("NavigationPolygon_83dwy")
+3:2/next_alternative_id = 14
+3:2/0 = 0
+3:2/0/physics_layer_0/linear_velocity = Vector2(0, 0)
+3:2/0/physics_layer_0/angular_velocity = 0.0
+3:2/0/navigation_layer_0/polygon = SubResource("NavigationPolygon_mh34o")
+3:2/0/custom_data_0 = true
+3:2/1 = 1
+3:2/1/physics_layer_0/linear_velocity = Vector2(0, 0)
+3:2/1/physics_layer_0/angular_velocity = 0.0
+3:2/1/navigation_layer_0/polygon = SubResource("NavigationPolygon_ey67w")
+3:2/1/custom_data_0 = true
+3:2/2 = 2
+3:2/2/physics_layer_0/linear_velocity = Vector2(0, 0)
+3:2/2/physics_layer_0/angular_velocity = 0.0
+3:2/2/navigation_layer_0/polygon = SubResource("NavigationPolygon_veext")
+3:2/2/custom_data_0 = true
+3:2/3 = 3
+3:2/3/physics_layer_0/linear_velocity = Vector2(0, 0)
+3:2/3/physics_layer_0/angular_velocity = 0.0
+3:2/3/navigation_layer_0/polygon = SubResource("NavigationPolygon_82nxb")
+3:2/3/custom_data_0 = true
+3:2/4 = 4
+3:2/4/physics_layer_0/linear_velocity = Vector2(0, 0)
+3:2/4/physics_layer_0/angular_velocity = 0.0
+3:2/4/navigation_layer_0/polygon = SubResource("NavigationPolygon_vn0r2")
+3:2/4/custom_data_0 = true
+3:2/5 = 5
+3:2/5/physics_layer_0/linear_velocity = Vector2(0, 0)
+3:2/5/physics_layer_0/angular_velocity = 0.0
+3:2/5/navigation_layer_0/polygon = SubResource("NavigationPolygon_hf247")
+3:2/5/custom_data_0 = true
+3:2/6 = 6
+3:2/6/physics_layer_0/linear_velocity = Vector2(0, 0)
+3:2/6/physics_layer_0/angular_velocity = 0.0
+3:2/6/navigation_layer_0/polygon = SubResource("NavigationPolygon_bnfkn")
+3:2/6/custom_data_0 = true
+3:2/7 = 7
+3:2/7/physics_layer_0/linear_velocity = Vector2(0, 0)
+3:2/7/physics_layer_0/angular_velocity = 0.0
+3:2/7/navigation_layer_0/polygon = SubResource("NavigationPolygon_7v2yb")
+3:2/7/custom_data_0 = true
+3:2/8 = 8
+3:2/8/physics_layer_0/linear_velocity = Vector2(0, 0)
+3:2/8/physics_layer_0/angular_velocity = 0.0
+3:2/8/navigation_layer_0/polygon = SubResource("NavigationPolygon_ibbsi")
+3:2/8/custom_data_0 = true
+3:2/9 = 9
+3:2/9/physics_layer_0/linear_velocity = Vector2(0, 0)
+3:2/9/physics_layer_0/angular_velocity = 0.0
+3:2/9/navigation_layer_0/polygon = SubResource("NavigationPolygon_8c0uo")
+3:2/9/custom_data_0 = true
+3:2/10 = 10
+3:2/10/physics_layer_0/linear_velocity = Vector2(0, 0)
+3:2/10/physics_layer_0/angular_velocity = 0.0
+3:2/10/navigation_layer_0/polygon = SubResource("NavigationPolygon_2cjek")
+3:2/10/custom_data_0 = true
+3:2/11 = 11
+3:2/11/physics_layer_0/linear_velocity = Vector2(0, 0)
+3:2/11/physics_layer_0/angular_velocity = 0.0
+3:2/11/navigation_layer_0/polygon = SubResource("NavigationPolygon_cpov6")
+3:2/11/custom_data_0 = true
+3:2/12 = 12
+3:2/12/physics_layer_0/linear_velocity = Vector2(0, 0)
+3:2/12/physics_layer_0/angular_velocity = 0.0
+3:2/12/navigation_layer_0/polygon = SubResource("NavigationPolygon_a4ghr")
+3:2/13 = 13
+3:2/13/physics_layer_0/linear_velocity = Vector2(0, 0)
+3:2/13/physics_layer_0/angular_velocity = 0.0
+3:2/13/navigation_layer_0/polygon = SubResource("NavigationPolygon_2cp0e")
+4:2/0 = 0
+4:2/0/physics_layer_0/linear_velocity = Vector2(0, 0)
+4:2/0/physics_layer_0/angular_velocity = 0.0
+4:2/0/physics_layer_0/polygon_0/points = PackedVector2Array(0, 12, 0, 6.18719, 0, 0, -6.75, 0, -12, 0, -12, -12, 12, -12, 12, 12)
+5:2/0 = 0
+5:2/0/physics_layer_0/linear_velocity = Vector2(0, 0)
+5:2/0/physics_layer_0/angular_velocity = 0.0
+5:2/0/physics_layer_0/polygon_0/points = PackedVector2Array(12, 0, 6.18719, 0, 2.25, 3, 0, 6.75, 0, 12, -12, 12, -12, -12, 12, -12)
+6:2/0 = 0
+6:2/0/physics_layer_0/linear_velocity = Vector2(0, 0)
+6:2/0/physics_layer_0/angular_velocity = 0.0
+6:2/0/physics_layer_0/polygon_0/points = PackedVector2Array(-12, 0, -6.18719, 0, -2.25, -3, 0, -6.75, 0, -12, 12, -12, 12, 12, -12, 12)
+7:2/0 = 0
+7:2/0/physics_layer_0/linear_velocity = Vector2(0, 0)
+7:2/0/physics_layer_0/angular_velocity = 0.0
+7:2/0/physics_layer_0/polygon_0/points = PackedVector2Array(0, -12, 0, -6.18719, 3, -2.25, 6.75, 0, 12, 0, 12, 12, -12, 12, -12, -12)
+8:2/0 = 0
+8:2/0/physics_layer_0/linear_velocity = Vector2(0, 0)
+8:2/0/physics_layer_0/angular_velocity = 0.0
+9:2/0 = 0
+9:2/0/physics_layer_0/linear_velocity = Vector2(0, 0)
+9:2/0/physics_layer_0/angular_velocity = 0.0
+10:2/0 = 0
+10:2/0/physics_layer_0/linear_velocity = Vector2(0, 0)
+10:2/0/physics_layer_0/angular_velocity = 0.0
+11:2/0 = 0
+11:2/0/physics_layer_0/linear_velocity = Vector2(0, 0)
+11:2/0/physics_layer_0/angular_velocity = 0.0
+12:2/0 = 0
+12:2/0/physics_layer_0/linear_velocity = Vector2(0, 0)
+12:2/0/physics_layer_0/angular_velocity = 0.0
+13:2/0 = 0
+13:2/0/physics_layer_0/linear_velocity = Vector2(0, 0)
+13:2/0/physics_layer_0/angular_velocity = 0.0
+14:2/0 = 0
+14:2/0/physics_layer_0/linear_velocity = Vector2(0, 0)
+14:2/0/physics_layer_0/angular_velocity = 0.0
+15:2/0 = 0
+15:2/0/physics_layer_0/linear_velocity = Vector2(0, 0)
+15:2/0/physics_layer_0/angular_velocity = 0.0
+0:3/0 = 0
+0:3/0/physics_layer_0/linear_velocity = Vector2(0, 0)
+0:3/0/physics_layer_0/angular_velocity = 0.0
+0:3/0/physics_layer_0/polygon_0/points = PackedVector2Array(12, 12, 0, 12, 0, -12, 12, -12)
+1:3/0 = 0
+1:3/0/physics_layer_0/linear_velocity = Vector2(0, 0)
+1:3/0/physics_layer_0/angular_velocity = 0.0
+1:3/0/physics_layer_0/polygon_0/points = PackedVector2Array(0, 12, -12, 12, -12, -12, 0, -12)
+2:3/0 = 0
+2:3/0/physics_layer_0/linear_velocity = Vector2(0, 0)
+2:3/0/physics_layer_0/angular_velocity = 0.0
+2:3/0/physics_layer_0/polygon_0/points = PackedVector2Array(12, 0, -12, 0, -12, -12, 12, -12)
+3:3/0 = 0
+3:3/0/physics_layer_0/linear_velocity = Vector2(0, 0)
+3:3/0/physics_layer_0/angular_velocity = 0.0
+3:3/0/physics_layer_0/polygon_0/points = PackedVector2Array(12, 12, -12, 12, -12, 0, 12, 0)
+4:3/0 = 0
+4:3/0/physics_layer_0/linear_velocity = Vector2(0, 0)
+4:3/0/physics_layer_0/angular_velocity = 0.0
+4:3/0/physics_layer_0/polygon_0/points = PackedVector2Array(-12, 0, -6.18719, 0, -2.25, -3, 0, -6.75, 0, -12, 12, -12, 12, 12, -12, 12)
+5:3/0 = 0
+5:3/0/physics_layer_0/linear_velocity = Vector2(0, 0)
+5:3/0/physics_layer_0/angular_velocity = 0.0
+5:3/0/physics_layer_0/polygon_0/points = PackedVector2Array(0, 12, 0, 6.18719, -3, 2.25, -6.75, 0, -12, 0, -12, -12, 12, -12, 12, 12)
+6:3/0 = 0
+6:3/0/physics_layer_0/linear_velocity = Vector2(0, 0)
+6:3/0/physics_layer_0/angular_velocity = 0.0
+6:3/0/physics_layer_0/polygon_0/points = PackedVector2Array(0, -12, 0, -6.18719, 3, -2.25, 6.75, 0, 12, 0, 12, 12, -12, 12, -12, -12)
+7:3/0 = 0
+7:3/0/physics_layer_0/linear_velocity = Vector2(0, 0)
+7:3/0/physics_layer_0/angular_velocity = 0.0
+7:3/0/physics_layer_0/polygon_0/points = PackedVector2Array(12, 0, 6.18719, 0, 2.25, 3, 0, 6.75, 0, 12, -12, 12, -12, -12, 12, -12)
+8:3/0 = 0
+8:3/0/physics_layer_0/linear_velocity = Vector2(0, 0)
+8:3/0/physics_layer_0/angular_velocity = 0.0
+9:3/0 = 0
+9:3/0/physics_layer_0/linear_velocity = Vector2(0, 0)
+9:3/0/physics_layer_0/angular_velocity = 0.0
+10:3/0 = 0
+10:3/0/physics_layer_0/linear_velocity = Vector2(0, 0)
+10:3/0/physics_layer_0/angular_velocity = 0.0
+11:3/0 = 0
+11:3/0/physics_layer_0/linear_velocity = Vector2(0, 0)
+11:3/0/physics_layer_0/angular_velocity = 0.0
+12:3/0 = 0
+12:3/0/physics_layer_0/linear_velocity = Vector2(0, 0)
+12:3/0/physics_layer_0/angular_velocity = 0.0
+13:3/0 = 0
+13:3/0/physics_layer_0/linear_velocity = Vector2(0, 0)
+13:3/0/physics_layer_0/angular_velocity = 0.0
+14:3/0 = 0
+14:3/0/physics_layer_0/linear_velocity = Vector2(0, 0)
+14:3/0/physics_layer_0/angular_velocity = 0.0
+15:3/0 = 0
+15:3/0/physics_layer_0/linear_velocity = Vector2(0, 0)
+15:3/0/physics_layer_0/angular_velocity = 0.0
+0:4/0 = 0
+0:4/0/physics_layer_0/linear_velocity = Vector2(0, 0)
+0:4/0/physics_layer_0/angular_velocity = 0.0
+0:4/0/physics_layer_0/polygon_0/points = PackedVector2Array(12, 0, 6.18719, 0, 2.25, 3, 0, 6.75, 0, 12, -12, 12, -12, -12, 12, -12)
+1:4/0 = 0
+1:4/0/physics_layer_0/linear_velocity = Vector2(0, 0)
+1:4/0/physics_layer_0/angular_velocity = 0.0
+1:4/0/physics_layer_0/polygon_0/points = PackedVector2Array(0, 12, 0, 6.18719, -3, 2.25, -6.75, 0, -12, 0, -12, -12, 12, -12, 12, 12)
+2:4/0 = 0
+2:4/0/physics_layer_0/linear_velocity = Vector2(0, 0)
+2:4/0/physics_layer_0/angular_velocity = 0.0
+2:4/0/physics_layer_0/polygon_0/points = PackedVector2Array(0, -12, 0, -6.18719, 3, -2.25, 6.75, 0, 12, 0, 12, 12, -12, 12, -12, -12)
+3:4/0 = 0
+3:4/0/physics_layer_0/linear_velocity = Vector2(0, 0)
+3:4/0/physics_layer_0/angular_velocity = 0.0
+3:4/0/physics_layer_0/polygon_0/points = PackedVector2Array(-12, 0, -6.18719, 0, -2.25, -3, 0, -6.75, 0, -12, 12, -12, 12, 12, -12, 12)
+4:4/0 = 0
+4:4/0/physics_layer_0/linear_velocity = Vector2(0, 0)
+4:4/0/physics_layer_0/angular_velocity = 0.0
+4:4/0/physics_layer_0/polygon_0/points = PackedVector2Array(-12, -12, 9, -12, 9, -7.5, 8.25, -6, 6, -3, 1.5, -0.75, -3.75, 0, -12, 0)
+5:4/0 = 0
+5:4/0/physics_layer_0/linear_velocity = Vector2(0, 0)
+5:4/0/physics_layer_0/angular_velocity = 0.0
+5:4/0/physics_layer_0/polygon_0/points = PackedVector2Array(12, -12, -9, -12, -9, -7.5, -8.25, -6, -6, -3, -1.5, -0.75, 3.75, 0, 12, 0)
+6:4/0 = 0
+6:4/0/physics_layer_0/linear_velocity = Vector2(0, 0)
+6:4/0/physics_layer_0/angular_velocity = 0.0
+7:4/0 = 0
+7:4/0/physics_layer_0/linear_velocity = Vector2(0, 0)
+7:4/0/physics_layer_0/angular_velocity = 0.0
+8:4/0 = 0
+8:4/0/physics_layer_0/linear_velocity = Vector2(0, 0)
+8:4/0/physics_layer_0/angular_velocity = 0.0
+9:4/0 = 0
+9:4/0/physics_layer_0/linear_velocity = Vector2(0, 0)
+9:4/0/physics_layer_0/angular_velocity = 0.0
+10:4/0 = 0
+10:4/0/physics_layer_0/linear_velocity = Vector2(0, 0)
+10:4/0/physics_layer_0/angular_velocity = 0.0
+11:4/0 = 0
+11:4/0/physics_layer_0/linear_velocity = Vector2(0, 0)
+11:4/0/physics_layer_0/angular_velocity = 0.0
+12:4/0 = 0
+12:4/0/physics_layer_0/linear_velocity = Vector2(0, 0)
+12:4/0/physics_layer_0/angular_velocity = 0.0
+13:4/0 = 0
+13:4/0/physics_layer_0/linear_velocity = Vector2(0, 0)
+13:4/0/physics_layer_0/angular_velocity = 0.0
+14:4/0 = 0
+14:4/0/physics_layer_0/linear_velocity = Vector2(0, 0)
+14:4/0/physics_layer_0/angular_velocity = 0.0
+15:4/0 = 0
+15:4/0/physics_layer_0/linear_velocity = Vector2(0, 0)
+15:4/0/physics_layer_0/angular_velocity = 0.0
+0:5/0 = 0
+0:5/0/physics_layer_0/linear_velocity = Vector2(0, 0)
+0:5/0/physics_layer_0/angular_velocity = 0.0
+1:5/0 = 0
+1:5/0/physics_layer_0/linear_velocity = Vector2(0, 0)
+1:5/0/physics_layer_0/angular_velocity = 0.0
+2:5/0 = 0
+2:5/0/physics_layer_0/linear_velocity = Vector2(0, 0)
+2:5/0/physics_layer_0/angular_velocity = 0.0
+3:5/0 = 0
+3:5/0/physics_layer_0/linear_velocity = Vector2(0, 0)
+3:5/0/physics_layer_0/angular_velocity = 0.0
+4:5/0 = 0
+4:5/0/physics_layer_0/linear_velocity = Vector2(0, 0)
+4:5/0/physics_layer_0/angular_velocity = 0.0
+5:5/0 = 0
+5:5/0/physics_layer_0/linear_velocity = Vector2(0, 0)
+5:5/0/physics_layer_0/angular_velocity = 0.0
+6:5/0 = 0
+6:5/0/physics_layer_0/linear_velocity = Vector2(0, 0)
+6:5/0/physics_layer_0/angular_velocity = 0.0
+7:5/0 = 0
+7:5/0/physics_layer_0/linear_velocity = Vector2(0, 0)
+7:5/0/physics_layer_0/angular_velocity = 0.0
+8:5/0 = 0
+8:5/0/physics_layer_0/linear_velocity = Vector2(0, 0)
+8:5/0/physics_layer_0/angular_velocity = 0.0
+9:5/0 = 0
+9:5/0/physics_layer_0/linear_velocity = Vector2(0, 0)
+9:5/0/physics_layer_0/angular_velocity = 0.0
+10:5/0 = 0
+10:5/0/physics_layer_0/linear_velocity = Vector2(0, 0)
+10:5/0/physics_layer_0/angular_velocity = 0.0
+11:5/0 = 0
+11:5/0/physics_layer_0/linear_velocity = Vector2(0, 0)
+11:5/0/physics_layer_0/angular_velocity = 0.0
+12:5/0 = 0
+12:5/0/physics_layer_0/linear_velocity = Vector2(0, 0)
+12:5/0/physics_layer_0/angular_velocity = 0.0
+13:5/0 = 0
+13:5/0/physics_layer_0/linear_velocity = Vector2(0, 0)
+13:5/0/physics_layer_0/angular_velocity = 0.0
+14:5/0 = 0
+14:5/0/physics_layer_0/linear_velocity = Vector2(0, 0)
+14:5/0/physics_layer_0/angular_velocity = 0.0
+15:5/0 = 0
+15:5/0/physics_layer_0/linear_velocity = Vector2(0, 0)
+15:5/0/physics_layer_0/angular_velocity = 0.0
+0:6/0 = 0
+0:6/0/physics_layer_0/linear_velocity = Vector2(0, 0)
+0:6/0/physics_layer_0/angular_velocity = 0.0
+1:6/0 = 0
+1:6/0/physics_layer_0/linear_velocity = Vector2(0, 0)
+1:6/0/physics_layer_0/angular_velocity = 0.0
+2:6/0 = 0
+2:6/0/physics_layer_0/linear_velocity = Vector2(0, 0)
+2:6/0/physics_layer_0/angular_velocity = 0.0
+3:6/0 = 0
+3:6/0/physics_layer_0/linear_velocity = Vector2(0, 0)
+3:6/0/physics_layer_0/angular_velocity = 0.0
+4:6/0 = 0
+4:6/0/physics_layer_0/linear_velocity = Vector2(0, 0)
+4:6/0/physics_layer_0/angular_velocity = 0.0
+5:6/0 = 0
+5:6/0/physics_layer_0/linear_velocity = Vector2(0, 0)
+5:6/0/physics_layer_0/angular_velocity = 0.0
+6:6/0 = 0
+6:6/0/physics_layer_0/linear_velocity = Vector2(0, 0)
+6:6/0/physics_layer_0/angular_velocity = 0.0
+7:6/0 = 0
+7:6/0/physics_layer_0/linear_velocity = Vector2(0, 0)
+7:6/0/physics_layer_0/angular_velocity = 0.0
+8:6/0 = 0
+8:6/0/physics_layer_0/linear_velocity = Vector2(0, 0)
+8:6/0/physics_layer_0/angular_velocity = 0.0
+9:6/0 = 0
+9:6/0/physics_layer_0/linear_velocity = Vector2(0, 0)
+9:6/0/physics_layer_0/angular_velocity = 0.0
+10:6/0 = 0
+10:6/0/physics_layer_0/linear_velocity = Vector2(0, 0)
+10:6/0/physics_layer_0/angular_velocity = 0.0
+11:6/0 = 0
+11:6/0/physics_layer_0/linear_velocity = Vector2(0, 0)
+11:6/0/physics_layer_0/angular_velocity = 0.0
+12:6/0 = 0
+12:6/0/physics_layer_0/linear_velocity = Vector2(0, 0)
+12:6/0/physics_layer_0/angular_velocity = 0.0
+13:6/0 = 0
+13:6/0/physics_layer_0/linear_velocity = Vector2(0, 0)
+13:6/0/physics_layer_0/angular_velocity = 0.0
+14:6/0 = 0
+14:6/0/physics_layer_0/linear_velocity = Vector2(0, 0)
+14:6/0/physics_layer_0/angular_velocity = 0.0
+15:6/0 = 0
+15:6/0/physics_layer_0/linear_velocity = Vector2(0, 0)
+15:6/0/physics_layer_0/angular_velocity = 0.0
+0:7/0 = 0
+0:7/0/physics_layer_0/linear_velocity = Vector2(0, 0)
+0:7/0/physics_layer_0/angular_velocity = 0.0
+1:7/0 = 0
+1:7/0/physics_layer_0/linear_velocity = Vector2(0, 0)
+1:7/0/physics_layer_0/angular_velocity = 0.0
+2:7/0 = 0
+2:7/0/physics_layer_0/linear_velocity = Vector2(0, 0)
+2:7/0/physics_layer_0/angular_velocity = 0.0
+3:7/0 = 0
+3:7/0/physics_layer_0/linear_velocity = Vector2(0, 0)
+3:7/0/physics_layer_0/angular_velocity = 0.0
+4:7/0 = 0
+4:7/0/physics_layer_0/linear_velocity = Vector2(0, 0)
+4:7/0/physics_layer_0/angular_velocity = 0.0
+5:7/0 = 0
+5:7/0/physics_layer_0/linear_velocity = Vector2(0, 0)
+5:7/0/physics_layer_0/angular_velocity = 0.0
+6:7/0 = 0
+6:7/0/physics_layer_0/linear_velocity = Vector2(0, 0)
+6:7/0/physics_layer_0/angular_velocity = 0.0
+7:7/0 = 0
+7:7/0/physics_layer_0/linear_velocity = Vector2(0, 0)
+7:7/0/physics_layer_0/angular_velocity = 0.0
+8:7/0 = 0
+8:7/0/physics_layer_0/linear_velocity = Vector2(0, 0)
+8:7/0/physics_layer_0/angular_velocity = 0.0
+9:7/0 = 0
+9:7/0/physics_layer_0/linear_velocity = Vector2(0, 0)
+9:7/0/physics_layer_0/angular_velocity = 0.0
+10:7/0 = 0
+10:7/0/physics_layer_0/linear_velocity = Vector2(0, 0)
+10:7/0/physics_layer_0/angular_velocity = 0.0
+11:7/0 = 0
+11:7/0/physics_layer_0/linear_velocity = Vector2(0, 0)
+11:7/0/physics_layer_0/angular_velocity = 0.0
+12:7/0 = 0
+12:7/0/physics_layer_0/linear_velocity = Vector2(0, 0)
+12:7/0/physics_layer_0/angular_velocity = 0.0
+13:7/0 = 0
+13:7/0/physics_layer_0/linear_velocity = Vector2(0, 0)
+13:7/0/physics_layer_0/angular_velocity = 0.0
+14:7/0 = 0
+14:7/0/physics_layer_0/linear_velocity = Vector2(0, 0)
+14:7/0/physics_layer_0/angular_velocity = 0.0
+15:7/0 = 0
+15:7/0/physics_layer_0/linear_velocity = Vector2(0, 0)
+15:7/0/physics_layer_0/angular_velocity = 0.0
+0:8/0 = 0
+0:8/0/physics_layer_0/linear_velocity = Vector2(0, 0)
+0:8/0/physics_layer_0/angular_velocity = 0.0
+1:8/0 = 0
+1:8/0/physics_layer_0/linear_velocity = Vector2(0, 0)
+1:8/0/physics_layer_0/angular_velocity = 0.0
+2:8/0 = 0
+2:8/0/physics_layer_0/linear_velocity = Vector2(0, 0)
+2:8/0/physics_layer_0/angular_velocity = 0.0
+3:8/0 = 0
+3:8/0/physics_layer_0/linear_velocity = Vector2(0, 0)
+3:8/0/physics_layer_0/angular_velocity = 0.0
+4:8/0 = 0
+4:8/0/physics_layer_0/linear_velocity = Vector2(0, 0)
+4:8/0/physics_layer_0/angular_velocity = 0.0
+5:8/0 = 0
+5:8/0/physics_layer_0/linear_velocity = Vector2(0, 0)
+5:8/0/physics_layer_0/angular_velocity = 0.0
+6:8/0 = 0
+6:8/0/physics_layer_0/linear_velocity = Vector2(0, 0)
+6:8/0/physics_layer_0/angular_velocity = 0.0
+7:8/0 = 0
+7:8/0/physics_layer_0/linear_velocity = Vector2(0, 0)
+7:8/0/physics_layer_0/angular_velocity = 0.0
+8:8/0 = 0
+8:8/0/physics_layer_0/linear_velocity = Vector2(0, 0)
+8:8/0/physics_layer_0/angular_velocity = 0.0
+9:8/0 = 0
+9:8/0/physics_layer_0/linear_velocity = Vector2(0, 0)
+9:8/0/physics_layer_0/angular_velocity = 0.0
+10:8/0 = 0
+10:8/0/physics_layer_0/linear_velocity = Vector2(0, 0)
+10:8/0/physics_layer_0/angular_velocity = 0.0
+11:8/0 = 0
+11:8/0/physics_layer_0/linear_velocity = Vector2(0, 0)
+11:8/0/physics_layer_0/angular_velocity = 0.0
+0:9/0 = 0
+0:9/0/physics_layer_0/linear_velocity = Vector2(0, 0)
+0:9/0/physics_layer_0/angular_velocity = 0.0
+1:9/0 = 0
+1:9/0/physics_layer_0/linear_velocity = Vector2(0, 0)
+1:9/0/physics_layer_0/angular_velocity = 0.0
+2:9/0 = 0
+2:9/0/physics_layer_0/linear_velocity = Vector2(0, 0)
+2:9/0/physics_layer_0/angular_velocity = 0.0
+3:9/0 = 0
+3:9/0/physics_layer_0/linear_velocity = Vector2(0, 0)
+3:9/0/physics_layer_0/angular_velocity = 0.0
+4:9/0 = 0
+4:9/0/physics_layer_0/linear_velocity = Vector2(0, 0)
+4:9/0/physics_layer_0/angular_velocity = 0.0
+5:9/0 = 0
+5:9/0/physics_layer_0/linear_velocity = Vector2(0, 0)
+5:9/0/physics_layer_0/angular_velocity = 0.0
+6:9/0 = 0
+6:9/0/physics_layer_0/linear_velocity = Vector2(0, 0)
+6:9/0/physics_layer_0/angular_velocity = 0.0
+7:9/0 = 0
+7:9/0/physics_layer_0/linear_velocity = Vector2(0, 0)
+7:9/0/physics_layer_0/angular_velocity = 0.0
+8:9/0 = 0
+8:9/0/physics_layer_0/linear_velocity = Vector2(0, 0)
+8:9/0/physics_layer_0/angular_velocity = 0.0
+9:9/0 = 0
+9:9/0/physics_layer_0/linear_velocity = Vector2(0, 0)
+9:9/0/physics_layer_0/angular_velocity = 0.0
+10:9/0 = 0
+10:9/0/physics_layer_0/linear_velocity = Vector2(0, 0)
+10:9/0/physics_layer_0/angular_velocity = 0.0
+11:9/0 = 0
+11:9/0/physics_layer_0/linear_velocity = Vector2(0, 0)
+11:9/0/physics_layer_0/angular_velocity = 0.0
+
+[sub_resource type="TileSet" id="TileSet_ew6vp"]
+tile_size = Vector2i(24, 24)
+physics_layer_0/collision_layer = 2
+physics_layer_0/collision_mask = 17
+navigation_layer_0/layers = 1
+custom_data_layer_0/name = "isEmpty"
+custom_data_layer_0/type = 1
+sources/0 = SubResource("TileSetAtlasSource_ych7r")
+
+[node name="Level1" type="Node"]
+
+[node name="UI" parent="." instance=ExtResource("4_vji5h")]
+
+[node name="TileMap" type="TileMap" parent="."]
+texture_filter = 1
+position = Vector2(-1, 12)
+tile_set = SubResource("TileSet_ew6vp")
+format = 2
+layer_0/tile_data = PackedInt32Array(131069, 131072, 3, 131070, 131072, 3, 131071, 131072, 3, 65536, 131072, 3, 65537, 131072, 3, 65539, 0, 2, 3, 65536, 3, 65532, 0, 3, -4, 0, 3, -65540, 0, 3, 131068, 65536, 2, -131076, 458752, 1, -131073, 131072, 65538, -196608, 131072, 131074, -131075, 196608, 3, -131074, 196608, 3, -196607, 196608, 3, -131067, 65536, 1, -196606, 196608, 3, -65533, 65536, 3, -131066, 0, 1, -262139, 327680, 0, -262138, 262144, 0, -196602, 262144, 0, -196603, 327680, 0, -196605, 393216, 1, -131069, 65536, 3, 65538, 131072, 3, -327675, 196608, 1, -393211, 131072, 1, -327674, 262144, 0, -393210, 262144, 0, -458746, 262144, 0, -524282, 262144, 0, -458747, 327680, 0, -524283, 327680, 0, -589818, 393216, 0, -589819, 458752, 0, -327676, 196608, 0, -327677, 196608, 0, -393212, 131072, 0, -393213, 131072, 0, -327678, 65536, 1, -393214, 458752, 0, -327680, 0, 1, -262145, 65536, 1, -393216, 262144, 0, -458752, 262144, 0, -327681, 327680, 0, -393217, 327680, 0, -458753, 196608, 1, -524288, 327680, 1, -524287, 196608, 0, -458755, 196608, 0, -458754, 196608, 0, -524286, 196608, 0, -524285, 0, 1, -458756, 65536, 1, -524292, 458752, 0, -589821, 393216, 0, -524291, 131072, 0, -524290, 131072, 0, -524289, 131072, 0, -589824, 131072, 0, -589823, 131072, 0, -589822, 131072, 0, -327683, 393216, 0, -262147, 0, 1, -262148, 196608, 0, -262149, 196608, 0, -327684, 131072, 0, -327685, 131072, 0, -262150, 327680, 1, -327686, 262144, 1, -196614, 262144, 0, -131078, 262144, 0, -458758, 262144, 0, -393222, 262144, 0, -524294, 393216, 0, -524295, 458752, 0, -65542, 0, 1, -65543, 65536, 1, -131079, 327680, 0, -196615, 327680, 0, -262151, 327680, 0, -327687, 327680, 0, -393223, 327680, 0, -458759, 327680, 0, -655361, 65536, 1, -720896, 0, 1, -786432, 262144, 0, -917504, 262144, 0, -851968, 262144, 0, -720897, 327680, 0, -786433, 327680, 0, -851969, 327680, 0, -983039, 131072, 3, -983038, 131072, 3, -983037, 131072, 3, -983036, 131072, 3, -983035, 131072, 3, -983034, 131072, 3, -983033, 131072, 3, -983032, 131072, 3, -983031, 131072, 3, -983030, 131072, 3, -983029, 131072, 3, -983028, 131072, 3, -917506, 131072, 3, -917507, 131072, 3, -917508, 131072, 3, -917510, 131072, 3, -917509, 131072, 3, -917511, 131072, 3, -917512, 131072, 3, -917513, 131072, 3, -917514, 131072, 3, -917515, 131072, 3, -917516, 131072, 3, -917517, 131072, 3, -917505, 65536, 4, -983040, 0, 4, -917518, 327680, 2, -983027, 262144, 2, -851982, 65536, 3, -786446, 65536, 3, -720910, 65536, 3, -655374, 65536, 3, -589838, 65536, 3, -524302, 65536, 3, -458766, 65536, 3, -393230, 65536, 3, -917491, 0, 3, -851955, 0, 3, -786419, 0, 3, -720883, 0, 3, -655347, 0, 3, -589811, 0, 3, -524275, 0, 3, -458739, 0, 3, -327694, 458752, 2, -393203, 393216, 2, -393204, 196608, 3, -393205, 196608, 3, -393206, 196608, 3, -393207, 196608, 3, -327693, 196608, 3, -327692, 196608, 3, -327691, 196608, 3, -327690, 196608, 3, -327689, 393216, 0, -393208, 458752, 0, -262153, 65536, 3, -196617, 65536, 3, -131081, 65536, 3, -327672, 0, 3, -262136, 0, 3, -196600, 0, 3, -131064, 65536, 1, -65545, 0, 1, -131063, 131072, 3, -131062, 131072, 3, -131061, 131072, 3, -131060, 131072, 3, -65547, 131072, 3, -65546, 131072, 3, -65548, 131072, 3, -65549, 131072, 3, -65550, 131072, 3, -131059, 131072, 3, 65522, 196608, 3, 65523, 196608, 3, 65524, 196608, 3, 65525, 196608, 3, 65526, 196608, 3, 9, 196608, 3, 10, 196608, 3, 11, 196608, 3, 12, 196608, 3, 13, 196608, 3, 8, 458752, 0, 65527, 393216, 0, 131063, 65536, 3, 196599, 65536, 3, 262135, 65536, 3, 65544, 0, 3, 131080, 0, 3, 196616, 0, 3, 262152, 65536, 1, 327671, 0, 1, 327670, 131072, 3, 327669, 131072, 3, 327668, 131072, 3, 327667, 131072, 3, 262153, 131072, 3, 262155, 131072, 3, 262154, 131072, 3, 262156, 131072, 3, 262157, 262144, 2, 327666, 327680, 2, 327693, 0, 3, 393229, 0, 3, 458765, 0, 3, 393202, 65536, 3, 458738, 65536, 3, 524274, 65536, 3, 589810, 65536, 3, 655346, 393216, 3, 655373, 327680, 3, 720882, 458752, 3, 786418, 65536, 3, 851954, 65536, 3, 917490, 65536, 3, 983026, 65536, 3, 720909, 0, 3, 786445, 0, 3, 851981, 0, 3, 917517, 0, 3, 1048562, 458752, 2, 983053, 393216, 2, 1048563, 196608, 3, 1048564, 196608, 3, 1048565, 196608, 3, 1048566, 196608, 3, 1048567, 196608, 3, 1048568, 196608, 3, 1048569, 196608, 3, 1048570, 196608, 3, 1048571, 196608, 3, 1048572, 196608, 3, 1048573, 196608, 3, 1048574, 196608, 3, 1048575, 196608, 3, 983040, 196608, 3, 983041, 196608, 3, 983042, 196608, 3, 983043, 196608, 3, 983044, 196608, 3, 983045, 196608, 3, 983046, 196608, 3, 983047, 196608, 3, 983048, 196608, 3, 983049, 196608, 3, 983050, 196608, 3, 983051, 196608, 3, 983052, 196608, 3, 655347, 131072, 0, 655372, 196608, 0, 720883, 196608, 0, 655348, 393216, 0, 720884, 0, 1, 196611, 393216, 0, 262140, 458752, 0, 262147, 0, 1, 327676, 65536, 1, 262141, 131072, 0, 262142, 131072, 0, 262143, 131072, 0, 196608, 131072, 0, 196609, 131072, 0, 196610, 131072, 0, 262146, 196608, 0, 262145, 196608, 0, 327677, 196608, 0, 327678, 196608, 0, 327679, 196608, 1, 262144, 327680, 1, 458752, 0, 1, 524287, 65536, 1, 393216, 262144, 0, 327680, 262144, 0, 458751, 327680, 0, 393215, 327680, 0, 6, 393216, 0, 5, 458752, 0, 65530, 393216, 0, 65529, 458752, 0, 262149, 65536, 1, 262150, 0, 1, 327674, 0, 1, 196613, 327680, 0, 131077, 327680, 0, 65541, 327680, 0, 196614, 262144, 0, 131078, 262144, 0, 65542, 262144, 0, 262138, 262144, 0, 196602, 262144, 0, 131066, 262144, 0, -524300, 458752, 0, -589816, 458752, 0, -524280, 65536, 1, -458764, 65536, 1, -458761, 0, 1, -524277, 0, 1, -589813, 393216, 0, -524297, 393216, 0, -524299, 131072, 0, -524298, 131072, 0, -589815, 131072, 0, -589814, 131072, 0, -524278, 196608, 0, -524279, 196608, 0, -458762, 196608, 0, -458763, 196608, 0, -655369, 0, 1, -655372, 65536, 1, -655371, 196608, 0, -655370, 196608, 0, -786444, 458752, 0, -851957, 393216, 0, -851960, 458752, 0, -720888, 65536, 1, -720885, 0, 1, -851959, 131072, 0, -851958, 131072, 0, -786443, 131072, 0, -786442, 131072, 0, -786441, 393216, 0, -720905, 262144, 0, -786421, 262144, 0, -720908, 327680, 0, -786424, 327680, 0, -720887, 196608, 0, -720886, 196608, 0, -655366, 196608, 0, -655365, 196608, 0, -655364, 196608, 0, -720893, 196608, 0, -720892, 196608, 0, -720891, 196608, 0, -655367, 65536, 1, -720894, 65536, 1, -720890, 0, 1, -655363, 0, 1, -786439, 458752, 0, -851966, 458752, 0, -851962, 393216, 0, -786435, 393216, 0, -720903, 327680, 0, -786430, 327680, 0, -786426, 262144, 0, -720899, 262144, 0, -786438, 131072, 0, -786437, 131072, 0, -786436, 131072, 0, -851964, 131072, 0, -851965, 131072, 0, -851963, 131072, 0, 458740, 458752, 0, 524276, 65536, 1, 393227, 393216, 0, 458763, 0, 1, 458741, 131072, 0, 458742, 131072, 0, 393226, 131072, 0, 393225, 131072, 0, 458762, 196608, 0, 458761, 327680, 1, 524277, 196608, 0, 524278, 196608, 1, 458743, 393216, 0, 393224, 458752, 0, 524279, 262144, 0, 655351, 262144, 0, 589815, 262144, 0, 458760, 327680, 0, 524296, 327680, 0, 524297, 262144, 0, 589814, 327680, 0, 655350, 327680, 0, 720887, 0, 1, 720886, 65536, 1, 917492, 65536, 1, 851956, 458752, 0, 851979, 0, 1, 786443, 393216, 0, 851957, 131072, 0, 851958, 131072, 0, 851959, 131072, 0, 851960, 131072, 0, 786442, 131072, 0, 786441, 131072, 0, 851978, 196608, 0, 851977, 196608, 0, 851976, 196608, 0, 851975, 196608, 0, 917493, 196608, 0, 917494, 196608, 0, 917495, 196608, 0, 917496, 196608, 0, 851961, 131072, 1, 851962, 262144, 1, 851963, 131072, 0, 851964, 131072, 0, 786436, 131072, 0, 786435, 131072, 0, 851974, 196608, 0, 851973, 196608, 0, 851972, 196608, 0, 851971, 196608, 0, 917497, 196608, 0, 917498, 196608, 0, 917499, 196608, 0, 917500, 196608, 0, 851965, 393216, 0, 917501, 0, 1, 786434, 458752, 0, 851970, 65536, 1, 917503, 65536, 1, 851968, 0, 1, 786432, 262144, 0, 720896, 262144, 0, 851967, 327680, 0, 786431, 327680, 0, 720895, 196608, 1, 655360, 327680, 1, 655361, 196608, 0, 655362, 196608, 0, 720893, 196608, 0, 720894, 196608, 0, 720892, 65536, 1, 655363, 0, 1, 655356, 458752, 0, 655357, 131072, 0, 786426, 262144, 0, 720890, 262144, 0, 655365, 327680, 0, 786425, 327680, 0, 720889, 327680, 0, 655354, 393216, 0, 655353, 458752, 0, 458745, 458752, 0, 393218, 458752, 0, 458749, 393216, 0, 393222, 393216, 0, 458758, 0, 1, 524281, 65536, 1, 524285, 0, 1, 458747, 131072, 0, 458746, 131072, 0, 458748, 131072, 0, 393219, 131072, 0, 393221, 131072, 0, 393220, 131072, 0, 524282, 196608, 0, 524284, 196608, 0, 524283, 196608, 0, 458755, 196608, 0, 458756, 196608, 0, 458757, 196608, 0, 458754, 65536, 1, 131079, 196608, 65538, 196615, 196608, 65538, 65543, 196608, 65538, -524276, 196608, 65538, -589812, 196608, 65538, -720884, 196608, 65538, -786420, 196608, 65538, -786445, 196608, 65538, -720909, 196608, 65538, -655373, 196608, 65538, -655368, 196608, 65538, -720904, 196608, 65538, -786440, 196608, 65538, -655362, 196608, 65538, -720898, 196608, 65538, -786434, 196608, 65538, -851967, 196608, 65538, -786431, 196608, 65538, -720895, 196608, 65538, -720889, 196608, 65538, -786425, 196608, 65538, -851961, 196608, 65538, -851956, 196608, 65538, -458760, 196608, 65538, -458765, 196608, 65538, -458757, 196608, 65538, -524284, 196608, 65538, -524281, 196608, 65538, -262152, 196608, 65538, -196616, 196608, 65538, -131080, 196608, 65538, 65528, 196608, 65538, 131064, 196608, 65538, -65544, 196608, 65538, -327688, 196608, 65538, -524293, 196608, 65538, -524296, 196608, 65538, -524301, 196608, 65538, -589820, 196608, 65538, -589817, 196608, 65538, -327682, 196608, 65538, -262146, 196608, 65538, -327679, 196608, 65538, -393215, 196608, 65538, -131077, 196608, 65538, -65541, 196608, 65538, 65531, 196608, 65538, 131067, 196608, 65538, 65540, 196608, 65538, 4, 196608, 65538, -131068, 196608, 65538, -196604, 196608, 65538, -131065, 196608, 65538, -196601, 196608, 65538, -262137, 196608, 65538, -327673, 196608, 65538, 262151, 196608, 65538, 262148, 196608, 65538, 196612, 196608, 65538, 262139, 196608, 65538, 327675, 196608, 65538, 327672, 196608, 65538, 262136, 196608, 65538, 458739, 196608, 65538, 524275, 196608, 65538, 524286, 196608, 65538, 458750, 196608, 65538, 458753, 196608, 65538, 393217, 196608, 65538, 458759, 196608, 65538, 393223, 196608, 65538, 458764, 196608, 65538, 393228, 196608, 65538, 786444, 196608, 65538, 851980, 196608, 65538, 851969, 196608, 65538, 786433, 196608, 65538, 917502, 196608, 65538, 851966, 196608, 65538, 720891, 196608, 65538, 655355, 196608, 65538, 720888, 196608, 65538, 655352, 196608, 65538, 720885, 196608, 65538, 655349, 196608, 65538, 851955, 196608, 65538, 917491, 196608, 65538, 786419, 196608, 458754, 655367, 196608, 65538, 655366, 262144, 0, 720901, 327680, 0, 786437, 131072, 1, 786438, 262144, 1, 786439, 131072, 0, 786440, 131072, 0, 655371, 65536, 1, 524301, 0, 3, 655370, 196608, 65538, 655369, 0, 1, 655368, 65536, 1, 720902, 262144, 0, 131065, 327680, 0, 196601, 327680, 0, 262137, 327680, 0, 327673, 65536, 1, 458744, 196608, 65538, 524280, 196608, 65538, 655358, 131072, 0, 655359, 131072, 0, 589824, 131072, 0, 589825, 131072, 0, 589826, 131072, 0, 589827, 393216, 0, 589829, 458752, 0, 589830, 393216, 0, 589831, 196608, 65538, 589832, 327680, 0, 589833, 262144, 0, 589834, 196608, 65538, 589835, 458752, 0, 589836, 131072, 0, 589837, 262144, 3, 393203, 196608, 458754, -851981, 196608, 458754, -917503, 196608, 458754, -196613, 196608, 458754, 327681, 196608, 458754, 327692, 196608, 524290, 720908, 196608, 524290, -917492, 196608, 524290, -851970, 196608, 524290, -458740, 196608, 589826, 917516, 196608, 589826, 524300, 196608, 589826, 786424, 196608, 589826, 720903, 196608, 655362, 983027, 196608, 655362, 589811, 196608, 655362, -393229, 196608, 655362, -65529, 196608, 2, -8, 196608, 2, -589832, 196608, 2, -655353, 196608, 2, 786427, 196608, 655362, 720900, 196608, 589826, 655364, 196608, 65538, 589828, 196608, 65538, 983028, 196608, 131074, 983029, 196608, 131074, 983030, 196608, 131074, 983031, 196608, 131074, 983032, 196608, 131074, 983033, 196608, 131074, 983034, 196608, 131074, 983035, 196608, 131074, 983036, 196608, 131074, 983037, 196608, 131074, 983039, 196608, 131074, 917504, 196608, 131074, 917506, 196608, 131074, 917507, 196608, 131074, 917508, 196608, 131074, 917509, 196608, 131074, 917510, 196608, 131074, 917511, 196608, 131074, 917512, 196608, 131074, 917513, 196608, 131074, 917514, 196608, 131074, 917515, 196608, 131074, 720904, 196608, 131074, 720905, 196608, 131074, 720907, 196608, 131074, 524299, 196608, 131074, 327691, 196608, 131074, 327690, 196608, 131074, 327689, 196608, 131074, 327688, 196608, 131074, 327686, 196608, 131074, 327685, 196608, 131074, 327683, 196608, 131074, 327682, 196608, 131074, 524290, 196608, 131074, 524291, 196608, 131074, 524293, 196608, 131074, 524294, 196608, 131074, 524288, 196608, 131074, 589823, 196608, 131074, 393213, 196608, 131074, 393212, 196608, 131074, 589821, 196608, 131074, 589820, 196608, 131074, 589818, 196608, 131074, 589817, 196608, 131074, 393210, 196608, 131074, 393209, 196608, 131074, 393207, 196608, 131074, 393206, 196608, 131074, 393205, 196608, 131074, 393204, 196608, 131074, 589812, 196608, 131074, 786420, 196608, 131074, 786422, 196608, 131074, 786423, 196608, 131074, 786428, 196608, 131074, 786429, 196608, 131074, 720898, 196608, 131074, 720899, 196608, 131074, -9, 196608, 131074, -10, 196608, 131074, -11, 196608, 131074, -12, 196608, 131074, -13, 196608, 131074, -14, 196608, 131074, -65523, 196608, 131074, -65524, 196608, 131074, -65525, 196608, 131074, -65526, 196608, 131074, -65527, 196608, 131074, -65528, 196608, 131074, -393228, 196608, 131074, -393227, 196608, 131074, -393226, 196608, 131074, -393225, 196608, 131074, -851980, 196608, 131074, -851979, 196608, 131074, -851978, 196608, 131074, -851977, 196608, 131074, -851975, 196608, 131074, -851974, 196608, 131074, -851973, 196608, 131074, -851972, 196608, 131074, -851971, 196608, 131074, -917502, 196608, 131074, -917501, 196608, 131074, -917500, 196608, 131074, -917499, 196608, 131074, -917498, 196608, 131074, -917496, 196608, 131074, -917495, 196608, 131074, -917494, 196608, 131074, -917493, 196608, 131074, -655352, 196608, 131074, -655351, 196608, 131074, -655350, 196608, 131074, -655349, 196608, 131074, -458744, 196608, 131074, -458743, 196608, 131074, -458742, 196608, 131074, -458741, 196608, 131074, -655354, 196608, 131074, -655355, 196608, 131074, -655357, 196608, 131074, -655358, 196608, 131074, -589825, 196608, 131074, -655360, 196608, 131074, -589827, 196608, 131074, -589828, 196608, 131074, -589831, 196608, 131074, -589830, 196608, 131074, -589833, 196608, 131074, -589834, 196608, 131074, -589835, 196608, 131074, -589836, 196608, 131074, -458750, 196608, 131074, -458749, 196608, 131074, -393220, 196608, 131074, -393219, 196608, 131074, -196612, 196608, 131074, -196611, 196608, 131074, -196609, 196608, 786434, -262144, 196608, 851970, -262142, 196608, 131074, -262141, 196608, 131074, 196604, 196608, 131074, 196605, 196608, 131074, 196606, 196608, 131074, 196607, 196608, 131074, 131072, 196608, 131074, 131073, 196608, 131074, 131074, 196608, 131074, 131075, 196608, 131074, -393209, 196608, 65538, -393224, 196608, 196610, -655348, 196608, 196610, 524295, 196608, 196610, -851976, 196608, 393218, -917497, 196608, 393218, 393208, 196608, 2, 327687, 196608, 2, 327684, 196608, 262146, 393211, 196608, 262146, 983038, 196608, 262146, 917505, 196608, 262146, 720906, 196608, 262146, 786421, 196608, 262146, 589822, 196608, 262146, 524289, 196608, 262146, 589816, 196608, 327682, -589837, 196608, 327682, -458745, 196608, 327682, 131076, 196608, 196610, 786430, 196608, 524290, 589813, 196608, 524290, 720897, 196608, 458754, 524298, 196608, 458754, -6, 196608, 131074, -7, 196608, 131074, -65531, 196608, 131074, -65530, 196608, 131074, -65532, 196608, 327682, 196603, 196608, 327682, 589819, 196608, 393218, 524292, 196608, 393218, -5, 196608, 196610, -589826, 196608, 262146, -655359, 196608, 262146, -589829, 196608, 393218, -655356, 196608, 393218, 196600, 196608, 65538, 393214, 196608, 524290, -262140, 196608, 524290, -393218, 196608, 524290, -458748, 196608, 589826, 7, 196608, 65538, -458751, 196608, 458754, -393221, 196608, 655362, -196610, 196608, 262146, -262143, 196608, 262146, -65539, 196608, 720898, -65538, 196608, 720898, -65537, 196608, 720898, -131072, 196608, 720898, -131071, 196608, 720898, -131070, 196608, 720898, -65534, 196608, 720898, 2, 196608, 720898, 1, 196608, 720898, -65536, 196608, 720898, -65535, 196608, 720898, 0, 196608, 720898, -1, 196608, 720898, 65535, 196608, 720898, -2, 196608, 720898, 65534, 196608, 720898, 65533, 196608, 720898, -3, 196608, 720898)
+script = ExtResource("2_shsqs")
+
+[node name="Camera2D" type="Camera2D" parent="."]
+position = Vector2(-1, 12)
+zoom = Vector2(0.812, 0.812)
+
+[node name="Player" parent="." node_paths=PackedStringArray("start_position", "pacman_death_sound_player", "pellets_manager", "ui") instance=ExtResource("5_n52ap")]
+position = Vector2(-2, 216)
+start_position = NodePath("../MovementTargets/Player/Start")
+pacman_death_sound_player = NodePath("../SoundPlayers/PacmanDeathSoundPlayer")
+pellets_manager = NodePath("../PelletsManager")
+ui = NodePath("../UI")
+
+[node name="Connector" parent="." instance=ExtResource("3_lpaoa")]
+
+[node name="PointsManager" type="Node" parent="."]
+script = ExtResource("12_oudmb")
+
+[node name="FruitTimer" type="Timer" parent="PointsManager"]
+wait_time = 26.0
+one_shot = true
+
+[node name="FruitSpawner" parent="PointsManager" instance=ExtResource("17_l2tnd")]
+
+[node name="PelletsManager" type="Node" parent="." node_paths=PackedStringArray("ghost_array")]
+script = ExtResource("6_6gf5c")
+ghost_array = [NodePath("../Ghosts/RedGhost"), NodePath("../Ghosts/BlueGhost"), NodePath("../Ghosts/PinkGhost"), NodePath("../Ghosts/YellowGhost")]
+
+[node name="Pellet" parent="PelletsManager" instance=ExtResource("7_ns0wm")]
+position = Vector2(-181, 0)
+
+[node name="Pellet2" parent="PelletsManager" instance=ExtResource("7_ns0wm")]
+position = Vector2(-181, 24)
+
+[node name="Pellet3" parent="PelletsManager" instance=ExtResource("7_ns0wm")]
+position = Vector2(-181, 48)
+
+[node name="Pellet4" parent="PelletsManager" instance=ExtResource("7_ns0wm")]
+position = Vector2(-181, 72)
+
+[node name="Pellet5" parent="PelletsManager" instance=ExtResource("7_ns0wm")]
+position = Vector2(-181, 96)
+
+[node name="Pellet6" parent="PelletsManager" instance=ExtResource("7_ns0wm")]
+position = Vector2(-181, 120)
+
+[node name="Pellet7" parent="PelletsManager" instance=ExtResource("7_ns0wm")]
+position = Vector2(-181, -144)
+
+[node name="Pellet8" parent="PelletsManager" instance=ExtResource("7_ns0wm")]
+position = Vector2(-181, -120)
+
+[node name="Pellet9" parent="PelletsManager" instance=ExtResource("7_ns0wm")]
+position = Vector2(-181, -96)
+
+[node name="Pellet10" parent="PelletsManager" instance=ExtResource("7_ns0wm")]
+position = Vector2(-181, -72)
+
+[node name="Pellet11" parent="PelletsManager" instance=ExtResource("7_ns0wm")]
+position = Vector2(-181, -48)
+
+[node name="Pellet12" parent="PelletsManager" instance=ExtResource("7_ns0wm")]
+position = Vector2(-181, -24)
+
+[node name="Pellet19" parent="PelletsManager" instance=ExtResource("7_ns0wm")]
+position = Vector2(-181, 168)
+
+[node name="Pellet20" parent="PelletsManager" instance=ExtResource("7_ns0wm")]
+position = Vector2(-181, 192)
+
+[node name="Pellet21" parent="PelletsManager" instance=ExtResource("7_ns0wm")]
+position = Vector2(-181, 216)
+
+[node name="Pellet22" parent="PelletsManager" instance=ExtResource("7_ns0wm")]
+position = Vector2(-181, 240)
+
+[node name="Pellet23" parent="PelletsManager" instance=ExtResource("7_ns0wm")]
+position = Vector2(-181, 264)
+
+[node name="Pellet24" parent="PelletsManager" instance=ExtResource("7_ns0wm")]
+position = Vector2(-181, 288)
+
+[node name="Pellet25" parent="PelletsManager" instance=ExtResource("7_ns0wm")]
+position = Vector2(-181, 144)
+
+[node name="Pellet113" parent="PelletsManager" instance=ExtResource("7_ns0wm")]
+position = Vector2(-181, 0)
+
+[node name="Pellet201" parent="PelletsManager" instance=ExtResource("7_ns0wm")]
+position = Vector2(-157, 0)
+
+[node name="Pellet202" parent="PelletsManager" instance=ExtResource("7_ns0wm")]
+position = Vector2(-157, 0)
+
+[node name="Pellet203" parent="PelletsManager" instance=ExtResource("7_ns0wm")]
+position = Vector2(154, 0)
+
+[node name="Pellet204" parent="PelletsManager" instance=ExtResource("7_ns0wm")]
+position = Vector2(154, 0)
+
+[node name="Pellet114" parent="PelletsManager" instance=ExtResource("7_ns0wm")]
+position = Vector2(-181, 24)
+
+[node name="Pellet115" parent="PelletsManager" instance=ExtResource("7_ns0wm")]
+position = Vector2(-181, 48)
+
+[node name="Pellet116" parent="PelletsManager" instance=ExtResource("7_ns0wm")]
+position = Vector2(-181, 72)
+
+[node name="Pellet117" parent="PelletsManager" instance=ExtResource("7_ns0wm")]
+position = Vector2(-181, 96)
+
+[node name="Pellet118" parent="PelletsManager" instance=ExtResource("7_ns0wm")]
+position = Vector2(-181, 120)
+
+[node name="Pellet119" parent="PelletsManager" instance=ExtResource("7_ns0wm")]
+position = Vector2(-181, -72)
+
+[node name="Pellet120" parent="PelletsManager" instance=ExtResource("7_ns0wm")]
+position = Vector2(-181, -48)
+
+[node name="Pellet121" parent="PelletsManager" instance=ExtResource("7_ns0wm")]
+position = Vector2(-181, -24)
+
+[node name="Pellet122" parent="PelletsManager" instance=ExtResource("7_ns0wm")]
+position = Vector2(-181, 144)
+
+[node name="Pellet13" parent="PelletsManager" instance=ExtResource("7_ns0wm")]
+position = Vector2(-181, -290)
+
+[node name="Pellet26" parent="PelletsManager" instance=ExtResource("7_ns0wm")]
+position = Vector2(-181, -312)
+
+[node name="Pellet14" parent="PelletsManager" instance=ExtResource("7_ns0wm")]
+position = Vector2(-181, -266)
+
+[node name="Pellet15" parent="PelletsManager" instance=ExtResource("7_ns0wm")]
+position = Vector2(-181, -242)
+
+[node name="Pellet16" parent="PelletsManager" instance=ExtResource("7_ns0wm")]
+position = Vector2(-181, -216)
+
+[node name="Pellet17" parent="PelletsManager" instance=ExtResource("7_ns0wm")]
+position = Vector2(-181, -194)
+
+[node name="Pellet18" parent="PelletsManager" instance=ExtResource("7_ns0wm")]
+position = Vector2(-181, -170)
+
+[node name="Pellet123" parent="PelletsManager" instance=ExtResource("7_ns0wm")]
+position = Vector2(-109, -144)
+
+[node name="Pellet124" parent="PelletsManager" instance=ExtResource("7_ns0wm")]
+position = Vector2(-109, -216)
+
+[node name="Pellet145" parent="PelletsManager" instance=ExtResource("7_ns0wm")]
+position = Vector2(-133, -216)
+
+[node name="Pellet147" parent="PelletsManager" instance=ExtResource("7_ns0wm")]
+position = Vector2(-62, -216)
+
+[node name="Pellet148" parent="PelletsManager" instance=ExtResource("7_ns0wm")]
+position = Vector2(-86, -216)
+
+[node name="Pellet197" parent="PelletsManager" instance=ExtResource("7_ns0wm")]
+position = Vector2(-61, -144)
+
+[node name="Pellet198" parent="PelletsManager" instance=ExtResource("7_ns0wm")]
+position = Vector2(-85, -144)
+
+[node name="Pellet199" parent="PelletsManager" instance=ExtResource("7_ns0wm")]
+position = Vector2(83, -144)
+
+[node name="Pellet200" parent="PelletsManager" instance=ExtResource("7_ns0wm")]
+position = Vector2(59, -144)
+
+[node name="Pellet149" parent="PelletsManager" instance=ExtResource("7_ns0wm")]
+position = Vector2(10, -216)
+
+[node name="Pellet150" parent="PelletsManager" instance=ExtResource("7_ns0wm")]
+position = Vector2(-14, -216)
+
+[node name="Pellet151" parent="PelletsManager" instance=ExtResource("7_ns0wm")]
+position = Vector2(83, -216)
+
+[node name="Pellet152" parent="PelletsManager" instance=ExtResource("7_ns0wm")]
+position = Vector2(59, -216)
+
+[node name="Pellet153" parent="PelletsManager" instance=ExtResource("7_ns0wm")]
+position = Vector2(156, -216)
+
+[node name="Pellet154" parent="PelletsManager" instance=ExtResource("7_ns0wm")]
+position = Vector2(132, -216)
+
+[node name="Pellet146" parent="PelletsManager" instance=ExtResource("7_ns0wm")]
+position = Vector2(-157, -216)
+
+[node name="Pellet125" parent="PelletsManager" instance=ExtResource("7_ns0wm")]
+position = Vector2(-109, -194)
+
+[node name="Pellet126" parent="PelletsManager" instance=ExtResource("7_ns0wm")]
+position = Vector2(-109, -170)
+
+[node name="Pellet127" parent="PelletsManager" instance=ExtResource("7_ns0wm")]
+position = Vector2(107, -144)
+
+[node name="Pellet128" parent="PelletsManager" instance=ExtResource("7_ns0wm")]
+position = Vector2(107, -216)
+
+[node name="Pellet129" parent="PelletsManager" instance=ExtResource("7_ns0wm")]
+position = Vector2(107, -194)
+
+[node name="Pellet130" parent="PelletsManager" instance=ExtResource("7_ns0wm")]
+position = Vector2(107, -170)
+
+[node name="Pellet131" parent="PelletsManager" instance=ExtResource("7_ns0wm")]
+position = Vector2(107, -144)
+
+[node name="Pellet132" parent="PelletsManager" instance=ExtResource("7_ns0wm")]
+position = Vector2(107, -216)
+
+[node name="Pellet205" parent="PelletsManager" instance=ExtResource("7_ns0wm")]
+position = Vector2(83, -216)
+
+[node name="Pellet206" parent="PelletsManager" instance=ExtResource("7_ns0wm")]
+position = Vector2(59, -216)
+
+[node name="Pellet207" parent="PelletsManager" instance=ExtResource("7_ns0wm")]
+position = Vector2(156, -216)
+
+[node name="Pellet208" parent="PelletsManager" instance=ExtResource("7_ns0wm")]
+position = Vector2(132, -216)
+
+[node name="Pellet209" parent="PelletsManager" instance=ExtResource("7_ns0wm")]
+position = Vector2(107, -216)
+
+[node name="Pellet210" parent="PelletsManager" instance=ExtResource("7_ns0wm")]
+position = Vector2(107, -216)
+
+[node name="Pellet237" parent="PelletsManager" instance=ExtResource("7_ns0wm")]
+position = Vector2(-109, 144)
+
+[node name="Pellet238" parent="PelletsManager" instance=ExtResource("7_ns0wm")]
+position = Vector2(-133, 144)
+
+[node name="Pellet239" parent="PelletsManager" instance=ExtResource("7_ns0wm")]
+position = Vector2(-62, 144)
+
+[node name="Pellet240" parent="PelletsManager" instance=ExtResource("7_ns0wm")]
+position = Vector2(-86, 144)
+
+[node name="Pellet274" parent="PelletsManager" instance=ExtResource("7_ns0wm")]
+position = Vector2(-62, 216)
+
+[node name="Pellet275" parent="PelletsManager" instance=ExtResource("7_ns0wm")]
+position = Vector2(-86, 216)
+
+[node name="Pellet297" parent="PelletsManager" instance=ExtResource("7_ns0wm")]
+position = Vector2(-61, 288)
+
+[node name="Pellet298" parent="PelletsManager" instance=ExtResource("7_ns0wm")]
+position = Vector2(-85, 288)
+
+[node name="Pellet299" parent="PelletsManager" instance=ExtResource("7_ns0wm")]
+position = Vector2(-207, 288)
+
+[node name="Pellet300" parent="PelletsManager" instance=ExtResource("7_ns0wm")]
+position = Vector2(-231, 288)
+
+[node name="Pellet335" parent="PelletsManager" instance=ExtResource("7_ns0wm")]
+position = Vector2(10, 360)
+
+[node name="Pellet336" parent="PelletsManager" instance=ExtResource("7_ns0wm")]
+position = Vector2(-14, 360)
+
+[node name="Pellet337" parent="PelletsManager" instance=ExtResource("7_ns0wm")]
+position = Vector2(82, 288)
+
+[node name="Pellet338" parent="PelletsManager" instance=ExtResource("7_ns0wm")]
+position = Vector2(58, 288)
+
+[node name="Pellet278" parent="PelletsManager" instance=ExtResource("7_ns0wm")]
+position = Vector2(83, 216)
+
+[node name="Pellet279" parent="PelletsManager" instance=ExtResource("7_ns0wm")]
+position = Vector2(59, 216)
+
+[node name="Pellet280" parent="PelletsManager" instance=ExtResource("7_ns0wm")]
+position = Vector2(155, 216)
+
+[node name="Pellet281" parent="PelletsManager" instance=ExtResource("7_ns0wm")]
+position = Vector2(131, 216)
+
+[node name="Pellet282" parent="PelletsManager" instance=ExtResource("7_ns0wm")]
+position = Vector2(155, 216)
+
+[node name="Pellet283" parent="PelletsManager" instance=ExtResource("7_ns0wm")]
+position = Vector2(131, 216)
+
+[node name="Pellet241" parent="PelletsManager" instance=ExtResource("7_ns0wm")]
+position = Vector2(83, 144)
+
+[node name="Pellet242" parent="PelletsManager" instance=ExtResource("7_ns0wm")]
+position = Vector2(59, 144)
+
+[node name="Pellet243" parent="PelletsManager" instance=ExtResource("7_ns0wm")]
+position = Vector2(156, 144)
+
+[node name="Pellet244" parent="PelletsManager" instance=ExtResource("7_ns0wm")]
+position = Vector2(132, 144)
+
+[node name="Pellet245" parent="PelletsManager" instance=ExtResource("7_ns0wm")]
+position = Vector2(-157, 144)
+
+[node name="Pellet272" parent="PelletsManager" instance=ExtResource("7_ns0wm")]
+position = Vector2(-133, 216)
+
+[node name="Pellet273" parent="PelletsManager" instance=ExtResource("7_ns0wm")]
+position = Vector2(-157, 216)
+
+[node name="Pellet246" parent="PelletsManager" instance=ExtResource("7_ns0wm")]
+position = Vector2(107, 144)
+
+[node name="Pellet247" parent="PelletsManager" instance=ExtResource("7_ns0wm")]
+position = Vector2(107, 144)
+
+[node name="Pellet248" parent="PelletsManager" instance=ExtResource("7_ns0wm")]
+position = Vector2(83, 144)
+
+[node name="Pellet249" parent="PelletsManager" instance=ExtResource("7_ns0wm")]
+position = Vector2(59, 144)
+
+[node name="Pellet250" parent="PelletsManager" instance=ExtResource("7_ns0wm")]
+position = Vector2(156, 144)
+
+[node name="Pellet251" parent="PelletsManager" instance=ExtResource("7_ns0wm")]
+position = Vector2(132, 144)
+
+[node name="Pellet252" parent="PelletsManager" instance=ExtResource("7_ns0wm")]
+position = Vector2(107, 144)
+
+[node name="Pellet253" parent="PelletsManager" instance=ExtResource("7_ns0wm")]
+position = Vector2(107, 144)
+
+[node name="Pellet170" parent="PelletsManager" instance=ExtResource("7_ns0wm")]
+position = Vector2(84, -312)
+
+[node name="Pellet171" parent="PelletsManager" instance=ExtResource("7_ns0wm")]
+position = Vector2(60, -312)
+
+[node name="Pellet172" parent="PelletsManager" instance=ExtResource("7_ns0wm")]
+position = Vector2(157, -312)
+
+[node name="Pellet173" parent="PelletsManager" instance=ExtResource("7_ns0wm")]
+position = Vector2(133, -312)
+
+[node name="Pellet174" parent="PelletsManager" instance=ExtResource("7_ns0wm")]
+position = Vector2(108, -312)
+
+[node name="Pellet175" parent="PelletsManager" instance=ExtResource("7_ns0wm")]
+position = Vector2(108, -312)
+
+[node name="Pellet176" parent="PelletsManager" instance=ExtResource("7_ns0wm")]
+position = Vector2(-132, -312)
+
+[node name="Pellet177" parent="PelletsManager" instance=ExtResource("7_ns0wm")]
+position = Vector2(-156, -312)
+
+[node name="Pellet178" parent="PelletsManager" instance=ExtResource("7_ns0wm")]
+position = Vector2(-59, -312)
+
+[node name="Pellet179" parent="PelletsManager" instance=ExtResource("7_ns0wm")]
+position = Vector2(-83, -312)
+
+[node name="Pellet180" parent="PelletsManager" instance=ExtResource("7_ns0wm")]
+position = Vector2(-108, -312)
+
+[node name="Pellet181" parent="PelletsManager" instance=ExtResource("7_ns0wm")]
+position = Vector2(-108, -312)
+
+[node name="Pellet155" parent="PelletsManager" instance=ExtResource("7_ns0wm")]
+position = Vector2(203, -216)
+
+[node name="Pellet156" parent="PelletsManager" instance=ExtResource("7_ns0wm")]
+position = Vector2(276, -216)
+
+[node name="Pellet157" parent="PelletsManager" instance=ExtResource("7_ns0wm")]
+position = Vector2(252, -216)
+
+[node name="Pellet158" parent="PelletsManager" instance=ExtResource("7_ns0wm")]
+position = Vector2(227, -216)
+
+[node name="Pellet159" parent="PelletsManager" instance=ExtResource("7_ns0wm")]
+position = Vector2(227, -216)
+
+[node name="Pellet182" parent="PelletsManager" instance=ExtResource("7_ns0wm")]
+position = Vector2(-278, -216)
+
+[node name="Pellet183" parent="PelletsManager" instance=ExtResource("7_ns0wm")]
+position = Vector2(-205, -216)
+
+[node name="Pellet184" parent="PelletsManager" instance=ExtResource("7_ns0wm")]
+position = Vector2(-229, -216)
+
+[node name="Pellet185" parent="PelletsManager" instance=ExtResource("7_ns0wm")]
+position = Vector2(-254, -216)
+
+[node name="Pellet186" parent="PelletsManager" instance=ExtResource("7_ns0wm")]
+position = Vector2(-254, -216)
+
+[node name="Pellet187" parent="PelletsManager" instance=ExtResource("7_ns0wm")]
+position = Vector2(-278, -312)
+
+[node name="Pellet188" parent="PelletsManager" instance=ExtResource("7_ns0wm")]
+position = Vector2(-205, -312)
+
+[node name="Pellet189" parent="PelletsManager" instance=ExtResource("7_ns0wm")]
+position = Vector2(-229, -312)
+
+[node name="Pellet190" parent="PelletsManager" instance=ExtResource("7_ns0wm")]
+position = Vector2(-254, -312)
+
+[node name="Pellet191" parent="PelletsManager" instance=ExtResource("7_ns0wm")]
+position = Vector2(-254, -312)
+
+[node name="Pellet192" parent="PelletsManager" instance=ExtResource("7_ns0wm")]
+position = Vector2(-278, -144)
+
+[node name="Pellet193" parent="PelletsManager" instance=ExtResource("7_ns0wm")]
+position = Vector2(-205, -144)
+
+[node name="Pellet194" parent="PelletsManager" instance=ExtResource("7_ns0wm")]
+position = Vector2(-229, -144)
+
+[node name="Pellet195" parent="PelletsManager" instance=ExtResource("7_ns0wm")]
+position = Vector2(-254, -144)
+
+[node name="Pellet196" parent="PelletsManager" instance=ExtResource("7_ns0wm")]
+position = Vector2(-254, -144)
+
+[node name="Pellet160" parent="PelletsManager" instance=ExtResource("7_ns0wm")]
+position = Vector2(203, -144)
+
+[node name="Pellet161" parent="PelletsManager" instance=ExtResource("7_ns0wm")]
+position = Vector2(276, -144)
+
+[node name="Pellet162" parent="PelletsManager" instance=ExtResource("7_ns0wm")]
+position = Vector2(252, -144)
+
+[node name="Pellet163" parent="PelletsManager" instance=ExtResource("7_ns0wm")]
+position = Vector2(227, -144)
+
+[node name="Pellet164" parent="PelletsManager" instance=ExtResource("7_ns0wm")]
+position = Vector2(227, -144)
+
+[node name="Pellet165" parent="PelletsManager" instance=ExtResource("7_ns0wm")]
+position = Vector2(202, -312)
+
+[node name="Pellet166" parent="PelletsManager" instance=ExtResource("7_ns0wm")]
+position = Vector2(275, -312)
+
+[node name="Pellet167" parent="PelletsManager" instance=ExtResource("7_ns0wm")]
+position = Vector2(251, -312)
+
+[node name="Pellet168" parent="PelletsManager" instance=ExtResource("7_ns0wm")]
+position = Vector2(226, -312)
+
+[node name="Pellet169" parent="PelletsManager" instance=ExtResource("7_ns0wm")]
+position = Vector2(226, -312)
+
+[node name="Pellet133" parent="PelletsManager" instance=ExtResource("7_ns0wm")]
+position = Vector2(107, -194)
+
+[node name="Pellet134" parent="PelletsManager" instance=ExtResource("7_ns0wm")]
+position = Vector2(107, -170)
+
+[node name="Pellet27" parent="PelletsManager" instance=ExtResource("7_ns0wm")]
+position = Vector2(179, 0)
+
+[node name="Pellet28" parent="PelletsManager" instance=ExtResource("7_ns0wm")]
+position = Vector2(179, 24)
+
+[node name="Pellet29" parent="PelletsManager" instance=ExtResource("7_ns0wm")]
+position = Vector2(179, 48)
+
+[node name="Pellet30" parent="PelletsManager" instance=ExtResource("7_ns0wm")]
+position = Vector2(179, 72)
+
+[node name="Pellet31" parent="PelletsManager" instance=ExtResource("7_ns0wm")]
+position = Vector2(179, 96)
+
+[node name="Pellet32" parent="PelletsManager" instance=ExtResource("7_ns0wm")]
+position = Vector2(179, 120)
+
+[node name="Pellet33" parent="PelletsManager" instance=ExtResource("7_ns0wm")]
+position = Vector2(179, -144)
+
+[node name="Pellet34" parent="PelletsManager" instance=ExtResource("7_ns0wm")]
+position = Vector2(179, -120)
+
+[node name="Pellet35" parent="PelletsManager" instance=ExtResource("7_ns0wm")]
+position = Vector2(179, -96)
+
+[node name="Pellet36" parent="PelletsManager" instance=ExtResource("7_ns0wm")]
+position = Vector2(179, -72)
+
+[node name="Pellet37" parent="PelletsManager" instance=ExtResource("7_ns0wm")]
+position = Vector2(179, -48)
+
+[node name="Pellet38" parent="PelletsManager" instance=ExtResource("7_ns0wm")]
+position = Vector2(179, -24)
+
+[node name="Pellet39" parent="PelletsManager" instance=ExtResource("7_ns0wm")]
+position = Vector2(179, 168)
+
+[node name="Pellet40" parent="PelletsManager" instance=ExtResource("7_ns0wm")]
+position = Vector2(179, 192)
+
+[node name="Pellet41" parent="PelletsManager" instance=ExtResource("7_ns0wm")]
+position = Vector2(179, 216)
+
+[node name="Pellet42" parent="PelletsManager" instance=ExtResource("7_ns0wm")]
+position = Vector2(179, 240)
+
+[node name="Pellet43" parent="PelletsManager" instance=ExtResource("7_ns0wm")]
+position = Vector2(179, 264)
+
+[node name="Pellet293" parent="PelletsManager" instance=ExtResource("7_ns0wm")]
+position = Vector2(251, 216)
+
+[node name="Pellet294" parent="PelletsManager" instance=ExtResource("7_ns0wm")]
+position = Vector2(251, 240)
+
+[node name="Pellet295" parent="PelletsManager" instance=ExtResource("7_ns0wm")]
+position = Vector2(251, 264)
+
+[node name="Pellet44" parent="PelletsManager" instance=ExtResource("7_ns0wm")]
+position = Vector2(179, 288)
+
+[node name="Pellet45" parent="PelletsManager" instance=ExtResource("7_ns0wm")]
+position = Vector2(179, 144)
+
+[node name="Pellet69" parent="PelletsManager" instance=ExtResource("7_ns0wm")]
+position = Vector2(299, 169)
+
+[node name="Pellet70" parent="PelletsManager" instance=ExtResource("7_ns0wm")]
+position = Vector2(299, 193)
+
+[node name="Pellet296" parent="PelletsManager" instance=ExtResource("7_ns0wm")]
+position = Vector2(275, 217)
+
+[node name="Pellet72" parent="PelletsManager" instance=ExtResource("7_ns0wm")]
+position = Vector2(299, 145)
+
+[node name="Pellet73" parent="PelletsManager" instance=ExtResource("7_ns0wm")]
+position = Vector2(299, 312)
+
+[node name="Pellet74" parent="PelletsManager" instance=ExtResource("7_ns0wm")]
+position = Vector2(299, 336)
+
+[node name="Pellet75" parent="PelletsManager" instance=ExtResource("7_ns0wm")]
+position = Vector2(299, 360)
+
+[node name="Pellet76" parent="PelletsManager" instance=ExtResource("7_ns0wm")]
+position = Vector2(299, 288)
+
+[node name="Pellet77" parent="PelletsManager" instance=ExtResource("7_ns0wm")]
+position = Vector2(35, 312)
+
+[node name="Pellet78" parent="PelletsManager" instance=ExtResource("7_ns0wm")]
+position = Vector2(35, 336)
+
+[node name="Pellet79" parent="PelletsManager" instance=ExtResource("7_ns0wm")]
+position = Vector2(35, 360)
+
+[node name="Pellet80" parent="PelletsManager" instance=ExtResource("7_ns0wm")]
+position = Vector2(35, 288)
+
+[node name="Pellet81" parent="PelletsManager" instance=ExtResource("7_ns0wm")]
+position = Vector2(-37, 312)
+
+[node name="Pellet82" parent="PelletsManager" instance=ExtResource("7_ns0wm")]
+position = Vector2(-37, 336)
+
+[node name="Pellet83" parent="PelletsManager" instance=ExtResource("7_ns0wm")]
+position = Vector2(-37, 360)
+
+[node name="Pellet84" parent="PelletsManager" instance=ExtResource("7_ns0wm")]
+position = Vector2(-37, 288)
+
+[node name="Pellet85" parent="PelletsManager" instance=ExtResource("7_ns0wm")]
+position = Vector2(-301, 312)
+
+[node name="Pellet86" parent="PelletsManager" instance=ExtResource("7_ns0wm")]
+position = Vector2(-301, 336)
+
+[node name="Pellet87" parent="PelletsManager" instance=ExtResource("7_ns0wm")]
+position = Vector2(-301, 360)
+
+[node name="Pellet88" parent="PelletsManager" instance=ExtResource("7_ns0wm")]
+position = Vector2(-301, 288)
+
+[node name="Pellet89" parent="PelletsManager" instance=ExtResource("7_ns0wm")]
+position = Vector2(-253, 240)
+
+[node name="Pellet90" parent="PelletsManager" instance=ExtResource("7_ns0wm")]
+position = Vector2(-253, 264)
+
+[node name="Pellet91" parent="PelletsManager" instance=ExtResource("7_ns0wm")]
+position = Vector2(-253, 288)
+
+[node name="Pellet92" parent="PelletsManager" instance=ExtResource("7_ns0wm")]
+position = Vector2(-253, 216)
+
+[node name="Pellet93" parent="PelletsManager" instance=ExtResource("7_ns0wm")]
+position = Vector2(-301, 168)
+
+[node name="Pellet94" parent="PelletsManager" instance=ExtResource("7_ns0wm")]
+position = Vector2(-301, 192)
+
+[node name="Pellet96" parent="PelletsManager" instance=ExtResource("7_ns0wm")]
+position = Vector2(-301, 144)
+
+[node name="Pellet97" parent="PelletsManager" instance=ExtResource("7_ns0wm")]
+position = Vector2(-37, 168)
+
+[node name="Pellet98" parent="PelletsManager" instance=ExtResource("7_ns0wm")]
+position = Vector2(-37, 192)
+
+[node name="Pellet99" parent="PelletsManager" instance=ExtResource("7_ns0wm")]
+position = Vector2(-37, 216)
+
+[node name="Pellet100" parent="PelletsManager" instance=ExtResource("7_ns0wm")]
+position = Vector2(-37, 144)
+
+[node name="Pellet101" parent="PelletsManager" instance=ExtResource("7_ns0wm")]
+position = Vector2(35, 168)
+
+[node name="Pellet102" parent="PelletsManager" instance=ExtResource("7_ns0wm")]
+position = Vector2(35, 192)
+
+[node name="Pellet103" parent="PelletsManager" instance=ExtResource("7_ns0wm")]
+position = Vector2(35, 216)
+
+[node name="Pellet104" parent="PelletsManager" instance=ExtResource("7_ns0wm")]
+position = Vector2(35, 144)
+
+[node name="Pellet105" parent="PelletsManager" instance=ExtResource("7_ns0wm")]
+position = Vector2(107, 240)
+
+[node name="Pellet106" parent="PelletsManager" instance=ExtResource("7_ns0wm")]
+position = Vector2(107, 264)
+
+[node name="Pellet107" parent="PelletsManager" instance=ExtResource("7_ns0wm")]
+position = Vector2(107, 288)
+
+[node name="Pellet108" parent="PelletsManager" instance=ExtResource("7_ns0wm")]
+position = Vector2(107, 216)
+
+[node name="Pellet109" parent="PelletsManager" instance=ExtResource("7_ns0wm")]
+position = Vector2(-109, 240)
+
+[node name="Pellet110" parent="PelletsManager" instance=ExtResource("7_ns0wm")]
+position = Vector2(-109, 264)
+
+[node name="Pellet111" parent="PelletsManager" instance=ExtResource("7_ns0wm")]
+position = Vector2(-109, 288)
+
+[node name="Pellet112" parent="PelletsManager" instance=ExtResource("7_ns0wm")]
+position = Vector2(-109, 216)
+
+[node name="Pellet46" parent="PelletsManager" instance=ExtResource("7_ns0wm")]
+position = Vector2(179, -290)
+
+[node name="Pellet47" parent="PelletsManager" instance=ExtResource("7_ns0wm")]
+position = Vector2(179, -312)
+
+[node name="Pellet48" parent="PelletsManager" instance=ExtResource("7_ns0wm")]
+position = Vector2(179, -266)
+
+[node name="Pellet49" parent="PelletsManager" instance=ExtResource("7_ns0wm")]
+position = Vector2(179, -242)
+
+[node name="Pellet50" parent="PelletsManager" instance=ExtResource("7_ns0wm")]
+position = Vector2(179, -216)
+
+[node name="Pellet135" parent="PelletsManager" instance=ExtResource("7_ns0wm")]
+position = Vector2(35, -290)
+
+[node name="Pellet136" parent="PelletsManager" instance=ExtResource("7_ns0wm")]
+position = Vector2(35, -312)
+
+[node name="Pellet137" parent="PelletsManager" instance=ExtResource("7_ns0wm")]
+position = Vector2(35, -266)
+
+[node name="Pellet138" parent="PelletsManager" instance=ExtResource("7_ns0wm")]
+position = Vector2(35, -242)
+
+[node name="Pellet139" parent="PelletsManager" instance=ExtResource("7_ns0wm")]
+position = Vector2(35, -216)
+
+[node name="Pellet211" parent="PelletsManager" instance=ExtResource("7_ns0wm")]
+position = Vector2(250, 0)
+
+[node name="Pellet212" parent="PelletsManager" instance=ExtResource("7_ns0wm")]
+position = Vector2(226, 0)
+
+[node name="Pellet213" parent="PelletsManager" instance=ExtResource("7_ns0wm")]
+position = Vector2(323, 0)
+
+[node name="Pellet214" parent="PelletsManager" instance=ExtResource("7_ns0wm")]
+position = Vector2(299, 0)
+
+[node name="Pellet215" parent="PelletsManager" instance=ExtResource("7_ns0wm")]
+position = Vector2(274, 0)
+
+[node name="Pellet216" parent="PelletsManager" instance=ExtResource("7_ns0wm")]
+position = Vector2(274, 0)
+
+[node name="Pellet217" parent="PelletsManager" instance=ExtResource("7_ns0wm")]
+position = Vector2(250, 0)
+
+[node name="Pellet218" parent="PelletsManager" instance=ExtResource("7_ns0wm")]
+position = Vector2(226, 0)
+
+[node name="Pellet219" parent="PelletsManager" instance=ExtResource("7_ns0wm")]
+position = Vector2(323, 0)
+
+[node name="Pellet220" parent="PelletsManager" instance=ExtResource("7_ns0wm")]
+position = Vector2(299, 0)
+
+[node name="Pellet221" parent="PelletsManager" instance=ExtResource("7_ns0wm")]
+position = Vector2(274, 0)
+
+[node name="Pellet222" parent="PelletsManager" instance=ExtResource("7_ns0wm")]
+position = Vector2(274, 0)
+
+[node name="Pellet223" parent="PelletsManager" instance=ExtResource("7_ns0wm")]
+position = Vector2(202, 0)
+
+[node name="Pellet254" parent="PelletsManager" instance=ExtResource("7_ns0wm")]
+position = Vector2(251, 144)
+
+[node name="Pellet255" parent="PelletsManager" instance=ExtResource("7_ns0wm")]
+position = Vector2(227, 144)
+
+[node name="Pellet256" parent="PelletsManager" instance=ExtResource("7_ns0wm")]
+position = Vector2(275, 144)
+
+[node name="Pellet257" parent="PelletsManager" instance=ExtResource("7_ns0wm")]
+position = Vector2(275, 144)
+
+[node name="Pellet258" parent="PelletsManager" instance=ExtResource("7_ns0wm")]
+position = Vector2(251, 144)
+
+[node name="Pellet259" parent="PelletsManager" instance=ExtResource("7_ns0wm")]
+position = Vector2(227, 144)
+
+[node name="Pellet260" parent="PelletsManager" instance=ExtResource("7_ns0wm")]
+position = Vector2(275, 144)
+
+[node name="Pellet261" parent="PelletsManager" instance=ExtResource("7_ns0wm")]
+position = Vector2(275, 144)
+
+[node name="Pellet262" parent="PelletsManager" instance=ExtResource("7_ns0wm")]
+position = Vector2(203, 144)
+
+[node name="Pellet284" parent="PelletsManager" instance=ExtResource("7_ns0wm")]
+position = Vector2(251, 288)
+
+[node name="Pellet285" parent="PelletsManager" instance=ExtResource("7_ns0wm")]
+position = Vector2(227, 288)
+
+[node name="Pellet286" parent="PelletsManager" instance=ExtResource("7_ns0wm")]
+position = Vector2(275, 288)
+
+[node name="Pellet287" parent="PelletsManager" instance=ExtResource("7_ns0wm")]
+position = Vector2(275, 288)
+
+[node name="Pellet288" parent="PelletsManager" instance=ExtResource("7_ns0wm")]
+position = Vector2(251, 288)
+
+[node name="Pellet289" parent="PelletsManager" instance=ExtResource("7_ns0wm")]
+position = Vector2(227, 288)
+
+[node name="Pellet290" parent="PelletsManager" instance=ExtResource("7_ns0wm")]
+position = Vector2(275, 288)
+
+[node name="Pellet291" parent="PelletsManager" instance=ExtResource("7_ns0wm")]
+position = Vector2(275, 288)
+
+[node name="Pellet292" parent="PelletsManager" instance=ExtResource("7_ns0wm")]
+position = Vector2(203, 288)
+
+[node name="Pellet263" parent="PelletsManager" instance=ExtResource("7_ns0wm")]
+position = Vector2(-228, 144)
+
+[node name="Pellet264" parent="PelletsManager" instance=ExtResource("7_ns0wm")]
+position = Vector2(-252, 144)
+
+[node name="Pellet265" parent="PelletsManager" instance=ExtResource("7_ns0wm")]
+position = Vector2(-204, 144)
+
+[node name="Pellet266" parent="PelletsManager" instance=ExtResource("7_ns0wm")]
+position = Vector2(-204, 144)
+
+[node name="Pellet267" parent="PelletsManager" instance=ExtResource("7_ns0wm")]
+position = Vector2(-228, 144)
+
+[node name="Pellet268" parent="PelletsManager" instance=ExtResource("7_ns0wm")]
+position = Vector2(-252, 144)
+
+[node name="Pellet269" parent="PelletsManager" instance=ExtResource("7_ns0wm")]
+position = Vector2(-204, 144)
+
+[node name="Pellet270" parent="PelletsManager" instance=ExtResource("7_ns0wm")]
+position = Vector2(-204, 144)
+
+[node name="Pellet271" parent="PelletsManager" instance=ExtResource("7_ns0wm")]
+position = Vector2(-276, 144)
+
+[node name="Pellet303" parent="PelletsManager" instance=ExtResource("7_ns0wm")]
+position = Vector2(-181, 360)
+
+[node name="Pellet304" parent="PelletsManager" instance=ExtResource("7_ns0wm")]
+position = Vector2(-181, 360)
+
+[node name="Pellet305" parent="PelletsManager" instance=ExtResource("7_ns0wm")]
+position = Vector2(-109, 360)
+
+[node name="Pellet306" parent="PelletsManager" instance=ExtResource("7_ns0wm")]
+position = Vector2(-133, 360)
+
+[node name="Pellet307" parent="PelletsManager" instance=ExtResource("7_ns0wm")]
+position = Vector2(-62, 360)
+
+[node name="Pellet308" parent="PelletsManager" instance=ExtResource("7_ns0wm")]
+position = Vector2(-86, 360)
+
+[node name="Pellet309" parent="PelletsManager" instance=ExtResource("7_ns0wm")]
+position = Vector2(-157, 360)
+
+[node name="Pellet310" parent="PelletsManager" instance=ExtResource("7_ns0wm")]
+position = Vector2(-228, 360)
+
+[node name="Pellet311" parent="PelletsManager" instance=ExtResource("7_ns0wm")]
+position = Vector2(-252, 360)
+
+[node name="Pellet312" parent="PelletsManager" instance=ExtResource("7_ns0wm")]
+position = Vector2(-204, 360)
+
+[node name="Pellet313" parent="PelletsManager" instance=ExtResource("7_ns0wm")]
+position = Vector2(-204, 360)
+
+[node name="Pellet314" parent="PelletsManager" instance=ExtResource("7_ns0wm")]
+position = Vector2(-228, 360)
+
+[node name="Pellet315" parent="PelletsManager" instance=ExtResource("7_ns0wm")]
+position = Vector2(-252, 360)
+
+[node name="Pellet316" parent="PelletsManager" instance=ExtResource("7_ns0wm")]
+position = Vector2(-204, 360)
+
+[node name="Pellet317" parent="PelletsManager" instance=ExtResource("7_ns0wm")]
+position = Vector2(-204, 360)
+
+[node name="Pellet318" parent="PelletsManager" instance=ExtResource("7_ns0wm")]
+position = Vector2(-276, 360)
+
+[node name="Pellet319" parent="PelletsManager" instance=ExtResource("7_ns0wm")]
+position = Vector2(155, 360)
+
+[node name="Pellet320" parent="PelletsManager" instance=ExtResource("7_ns0wm")]
+position = Vector2(155, 360)
+
+[node name="Pellet321" parent="PelletsManager" instance=ExtResource("7_ns0wm")]
+position = Vector2(227, 360)
+
+[node name="Pellet322" parent="PelletsManager" instance=ExtResource("7_ns0wm")]
+position = Vector2(203, 360)
+
+[node name="Pellet323" parent="PelletsManager" instance=ExtResource("7_ns0wm")]
+position = Vector2(274, 360)
+
+[node name="Pellet324" parent="PelletsManager" instance=ExtResource("7_ns0wm")]
+position = Vector2(250, 360)
+
+[node name="Pellet325" parent="PelletsManager" instance=ExtResource("7_ns0wm")]
+position = Vector2(179, 360)
+
+[node name="Pellet326" parent="PelletsManager" instance=ExtResource("7_ns0wm")]
+position = Vector2(108, 360)
+
+[node name="Pellet327" parent="PelletsManager" instance=ExtResource("7_ns0wm")]
+position = Vector2(84, 360)
+
+[node name="Pellet328" parent="PelletsManager" instance=ExtResource("7_ns0wm")]
+position = Vector2(132, 360)
+
+[node name="Pellet329" parent="PelletsManager" instance=ExtResource("7_ns0wm")]
+position = Vector2(132, 360)
+
+[node name="Pellet330" parent="PelletsManager" instance=ExtResource("7_ns0wm")]
+position = Vector2(108, 360)
+
+[node name="Pellet331" parent="PelletsManager" instance=ExtResource("7_ns0wm")]
+position = Vector2(84, 360)
+
+[node name="Pellet332" parent="PelletsManager" instance=ExtResource("7_ns0wm")]
+position = Vector2(132, 360)
+
+[node name="Pellet333" parent="PelletsManager" instance=ExtResource("7_ns0wm")]
+position = Vector2(132, 360)
+
+[node name="Pellet334" parent="PelletsManager" instance=ExtResource("7_ns0wm")]
+position = Vector2(60, 360)
+
+[node name="Pellet301" parent="PelletsManager" instance=ExtResource("7_ns0wm")]
+position = Vector2(-276, 216)
+
+[node name="Pellet302" parent="PelletsManager" instance=ExtResource("7_ns0wm")]
+position = Vector2(-276, 288)
+
+[node name="Pellet224" parent="PelletsManager" instance=ExtResource("7_ns0wm")]
+position = Vector2(-276, 0)
+
+[node name="Pellet225" parent="PelletsManager" instance=ExtResource("7_ns0wm")]
+position = Vector2(-300, 0)
+
+[node name="Pellet226" parent="PelletsManager" instance=ExtResource("7_ns0wm")]
+position = Vector2(-203, 0)
+
+[node name="Pellet227" parent="PelletsManager" instance=ExtResource("7_ns0wm")]
+position = Vector2(-227, 0)
+
+[node name="Pellet228" parent="PelletsManager" instance=ExtResource("7_ns0wm")]
+position = Vector2(-252, 0)
+
+[node name="Pellet229" parent="PelletsManager" instance=ExtResource("7_ns0wm")]
+position = Vector2(-252, 0)
+
+[node name="Pellet230" parent="PelletsManager" instance=ExtResource("7_ns0wm")]
+position = Vector2(-276, 0)
+
+[node name="Pellet231" parent="PelletsManager" instance=ExtResource("7_ns0wm")]
+position = Vector2(-300, 0)
+
+[node name="Pellet232" parent="PelletsManager" instance=ExtResource("7_ns0wm")]
+position = Vector2(-203, 0)
+
+[node name="Pellet233" parent="PelletsManager" instance=ExtResource("7_ns0wm")]
+position = Vector2(-227, 0)
+
+[node name="Pellet234" parent="PelletsManager" instance=ExtResource("7_ns0wm")]
+position = Vector2(-252, 0)
+
+[node name="Pellet235" parent="PelletsManager" instance=ExtResource("7_ns0wm")]
+position = Vector2(-252, 0)
+
+[node name="Pellet236" parent="PelletsManager" instance=ExtResource("7_ns0wm")]
+position = Vector2(-324, 0)
+
+[node name="Pellet140" parent="PelletsManager" instance=ExtResource("7_ns0wm")]
+position = Vector2(-37, -290)
+
+[node name="Pellet141" parent="PelletsManager" instance=ExtResource("7_ns0wm")]
+position = Vector2(-37, -312)
+
+[node name="Pellet142" parent="PelletsManager" instance=ExtResource("7_ns0wm")]
+position = Vector2(-37, -266)
+
+[node name="Pellet143" parent="PelletsManager" instance=ExtResource("7_ns0wm")]
+position = Vector2(-37, -242)
+
+[node name="Pellet144" parent="PelletsManager" instance=ExtResource("7_ns0wm")]
+position = Vector2(-37, -216)
+
+[node name="Pellet51" parent="PelletsManager" instance=ExtResource("7_ns0wm")]
+position = Vector2(179, -194)
+
+[node name="Pellet52" parent="PelletsManager" instance=ExtResource("7_ns0wm")]
+position = Vector2(179, -170)
+
+[node name="Pellet53" parent="PelletsManager" instance=ExtResource("7_ns0wm")]
+position = Vector2(299, -144)
+
+[node name="Pellet54" parent="PelletsManager" instance=ExtResource("7_ns0wm")]
+position = Vector2(299, -290)
+
+[node name="Pellet55" parent="PelletsManager" instance=ExtResource("7_ns0wm")]
+position = Vector2(299, -312)
+
+[node name="Pellet57" parent="PelletsManager" instance=ExtResource("7_ns0wm")]
+position = Vector2(299, -242)
+
+[node name="Pellet58" parent="PelletsManager" instance=ExtResource("7_ns0wm")]
+position = Vector2(299, -216)
+
+[node name="Pellet59" parent="PelletsManager" instance=ExtResource("7_ns0wm")]
+position = Vector2(299, -194)
+
+[node name="Pellet60" parent="PelletsManager" instance=ExtResource("7_ns0wm")]
+position = Vector2(299, -170)
+
+[node name="Pellet61" parent="PelletsManager" instance=ExtResource("7_ns0wm")]
+position = Vector2(-301, -144)
+
+[node name="Pellet62" parent="PelletsManager" instance=ExtResource("7_ns0wm")]
+position = Vector2(-301, -288)
+
+[node name="Pellet63" parent="PelletsManager" instance=ExtResource("7_ns0wm")]
+position = Vector2(-301, -312)
+
+[node name="Pellet65" parent="PelletsManager" instance=ExtResource("7_ns0wm")]
+position = Vector2(-301, -240)
+
+[node name="Pellet66" parent="PelletsManager" instance=ExtResource("7_ns0wm")]
+position = Vector2(-301, -216)
+
+[node name="Pellet67" parent="PelletsManager" instance=ExtResource("7_ns0wm")]
+position = Vector2(-301, -192)
+
+[node name="Pellet68" parent="PelletsManager" instance=ExtResource("7_ns0wm")]
+position = Vector2(-301, -168)
+
+[node name="LargePellet" parent="PelletsManager" instance=ExtResource("8_yfcxs")]
+position = Vector2(-301, -264)
+
+[node name="LargePellet2" parent="PelletsManager" instance=ExtResource("8_yfcxs")]
+position = Vector2(299, -266)
+
+[node name="LargePellet3" parent="PelletsManager" instance=ExtResource("8_yfcxs")]
+position = Vector2(298, 215)
+
+[node name="LargePellet4" parent="PelletsManager" instance=ExtResource("8_yfcxs")]
+position = Vector2(-301, 216)
+
+[node name="Ghosts" type="Node" parent="."]
+script = ExtResource("9_y7gy6")
+
+[node name="RedGhost" parent="Ghosts" node_paths=PackedStringArray("tile_map", "chasing_target", "points_manager", "starting_position", "ghost_eaten_sound_player") instance=ExtResource("10_tv2mt")]
+position = Vector2(0, -70)
+scatter_wait_time = 8
+tile_map = NodePath("../../TileMap")
+color = Color(0.999996, 0.456739, 0.388364, 1)
+chasing_target = NodePath("../../Player")
+points_manager = NodePath("../../PointsManager")
+starting_position = NodePath("../../MovementTargets/RedGhost/Starting_Position")
+ghost_eaten_sound_player = NodePath("../../SoundPlayers/EatGhostSoundPlayer")
+starting_texture = ExtResource("11_dyu2c")
+
+[node name="BlueGhost" parent="Ghosts" node_paths=PackedStringArray("tile_map", "chasing_target", "points_manager", "starting_position", "ghost_eaten_sound_player") instance=ExtResource("10_tv2mt")]
+position = Vector2(-41, 18)
+at_home_wait_time = 7
+scatter_wait_time = 8
+tile_map = NodePath("../../TileMap")
+color = Color(0.561151, 0.704473, 1, 1)
+chasing_target = NodePath("../../Player")
+points_manager = NodePath("../../PointsManager")
+is_starting_at_home = true
+starting_position = NodePath("../../MovementTargets/BlueGhost/Home/Bottom")
+ghost_eaten_sound_player = NodePath("../../SoundPlayers/EatGhostSoundPlayer")
+starting_texture = ExtResource("11_dyu2c")
+
+[node name="PinkGhost" parent="Ghosts" node_paths=PackedStringArray("tile_map", "chasing_target", "points_manager", "starting_position", "ghost_eaten_sound_player") instance=ExtResource("10_tv2mt")]
+position = Vector2(-1, -18)
+at_home_wait_time = 14
+scatter_wait_time = 8
+tile_map = NodePath("../../TileMap")
+color = Color(1, 0.666112, 0.996227, 1)
+chasing_target = NodePath("../../Player")
+points_manager = NodePath("../../PointsManager")
+is_starting_at_home = true
+starting_position = NodePath("../../MovementTargets/PinkGhost/Home/Top")
+ghost_eaten_sound_player = NodePath("../../SoundPlayers/EatGhostSoundPlayer")
+starting_texture = ExtResource("11_dyu2c")
+
+[node name="YellowGhost" parent="Ghosts" node_paths=PackedStringArray("movement_targets", "tile_map", "chasing_target", "points_manager", "starting_position", "ghost_eaten_sound_player") instance=ExtResource("10_tv2mt")]
+position = Vector2(43, 18)
+at_home_wait_time = 21
+scatter_wait_time = 8
+movement_targets = NodePath("../../PointsManager")
+tile_map = NodePath("../../TileMap")
+color = Color(1, 0.72682, 0.337789, 1)
+chasing_target = NodePath("../../Player")
+points_manager = NodePath("../../PointsManager")
+is_starting_at_home = true
+starting_position = NodePath("../../MovementTargets/YellowGhost/Home/Bottom")
+ghost_eaten_sound_player = NodePath("../../SoundPlayers/EatGhostSoundPlayer")
+starting_texture = ExtResource("11_dyu2c")
+
+[node name="MovementTargets" type="Node" parent="."]
+
+[node name="RedGhost" type="Node" parent="MovementTargets"]
+
+[node name="Scatter" type="Node" parent="MovementTargets/RedGhost"]
+
+[node name="Red1" type="Marker2D" parent="MovementTargets/RedGhost/Scatter"]
+position = Vector2(-181, -216)
+
+[node name="Red2" type="Marker2D" parent="MovementTargets/RedGhost/Scatter"]
+position = Vector2(-301, -216)
+
+[node name="Red3" type="Marker2D" parent="MovementTargets/RedGhost/Scatter"]
+position = Vector2(-301, -312)
+
+[node name="Red4" type="Marker2D" parent="MovementTargets/RedGhost/Scatter"]
+position = Vector2(-181, -312)
+
+[node name="Home" type="Node" parent="MovementTargets/RedGhost"]
+
+[node name="Top" type="Marker2D" parent="MovementTargets/RedGhost/Home"]
+position = Vector2(-58, -18)
+
+[node name="Bottom" type="Marker2D" parent="MovementTargets/RedGhost/Home"]
+position = Vector2(-58, 18)
+
+[node name="Starting_Position" type="Marker2D" parent="MovementTargets/RedGhost"]
+position = Vector2(0, -70)
+
+[node name="BlueGhost" type="Node" parent="MovementTargets"]
+
+[node name="Scatter" type="Node" parent="MovementTargets/BlueGhost"]
+
+[node name="Blue1" type="Marker2D" parent="MovementTargets/BlueGhost/Scatter"]
+position = Vector2(179, -216)
+
+[node name="Blue2" type="Marker2D" parent="MovementTargets/BlueGhost/Scatter"]
+position = Vector2(179, -312)
+
+[node name="Blue3" type="Marker2D" parent="MovementTargets/BlueGhost/Scatter"]
+position = Vector2(299, -312)
+
+[node name="Blue4" type="Marker2D" parent="MovementTargets/BlueGhost/Scatter"]
+position = Vector2(299, -216)
+
+[node name="Home" type="Node" parent="MovementTargets/BlueGhost"]
+
+[node name="Top" type="Marker2D" parent="MovementTargets/BlueGhost/Home"]
+position = Vector2(-42, -18)
+
+[node name="Bottom" type="Marker2D" parent="MovementTargets/BlueGhost/Home"]
+position = Vector2(-41, 18)
+
+[node name="PinkGhost" type="Node" parent="MovementTargets"]
+
+[node name="Scatter" type="Node" parent="MovementTargets/PinkGhost"]
+
+[node name="Pink1" type="Marker2D" parent="MovementTargets/PinkGhost/Scatter"]
+position = Vector2(-181, 144)
+
+[node name="Pink2" type="Marker2D" parent="MovementTargets/PinkGhost/Scatter"]
+position = Vector2(-253, 288)
+
+[node name="Pink3" type="Marker2D" parent="MovementTargets/PinkGhost/Scatter"]
+position = Vector2(-37, 360)
+
+[node name="Pink4" type="Marker2D" parent="MovementTargets/PinkGhost/Scatter"]
+position = Vector2(-109, 216)
+
+[node name="Home" type="Node" parent="MovementTargets/PinkGhost"]
+
+[node name="Top" type="Marker2D" parent="MovementTargets/PinkGhost/Home"]
+position = Vector2(-1, -18)
+
+[node name="Bottom" type="Marker2D" parent="MovementTargets/PinkGhost/Home"]
+position = Vector2(-1, 18)
+
+[node name="YellowGhost" type="Node" parent="MovementTargets"]
+
+[node name="Scatter" type="Node" parent="MovementTargets/YellowGhost"]
+
+[node name="Yellow1" type="Marker2D" parent="MovementTargets/YellowGhost/Scatter"]
+position = Vector2(179, 144)
+
+[node name="Yellow2" type="Marker2D" parent="MovementTargets/YellowGhost/Scatter"]
+position = Vector2(251, 288)
+
+[node name="Yellow3" type="Marker2D" parent="MovementTargets/YellowGhost/Scatter"]
+position = Vector2(35, 359)
+
+[node name="Yellow4" type="Marker2D" parent="MovementTargets/YellowGhost/Scatter"]
+position = Vector2(107, 216)
+
+[node name="Home" type="Node" parent="MovementTargets/YellowGhost"]
+
+[node name="Top" type="Marker2D" parent="MovementTargets/YellowGhost/Home"]
+position = Vector2(43, -18)
+
+[node name="Bottom" type="Marker2D" parent="MovementTargets/YellowGhost/Home"]
+position = Vector2(43, 18)
+
+[node name="Player" type="Node" parent="MovementTargets"]
+
+[node name="Start" type="Marker2D" parent="MovementTargets/Player"]
+position = Vector2(-2, 216)
+
+[node name="SoundPlayers" type="Node" parent="."]
+
+[node name="ChompSoundPlayer" type="AudioStreamPlayer2D" parent="SoundPlayers"]
+stream = ExtResource("13_mq0d8")
+volume_db = -10.0
+
+[node name="EatGhostSoundPlayer" type="AudioStreamPlayer2D" parent="SoundPlayers"]
+stream = ExtResource("14_idy24")
+volume_db = -10.0
+
+[node name="PowerPelletSoundPlayer" type="AudioStreamPlayer2D" parent="SoundPlayers"]
+stream = ExtResource("15_7twg0")
+volume_db = -10.0
+
+[node name="PacmanDeathSoundPlayer" type="AudioStreamPlayer2D" parent="SoundPlayers"]
+stream = ExtResource("16_jb542")
+volume_db = -10.0
+
+[node name="FruitSoundPlayer" type="AudioStreamPlayer2D" parent="SoundPlayers"]
+stream = ExtResource("18_2w32i")
+volume_db = -10.0
+
+[node name="ExtraLifeSoundPlayer" type="AudioStreamPlayer2D" parent="SoundPlayers"]
+stream = ExtResource("19_vqghn")
+volume_db = -8.0
+
+[node name="IntermissionSoundPlayer" type="AudioStreamPlayer2D" parent="SoundPlayers"]
+stream = ExtResource("20_wla1l")
+volume_db = -10.0
+
+[node name="LevelEndTimer" type="Timer" parent="."]
+wait_time = 3.5
+one_shot = true
+
+[connection signal="timeout" from="PointsManager/FruitTimer" to="PointsManager" method="_on_fruit_timer_timeout"]
+[connection signal="timeout" from="LevelEndTimer" to="PelletsManager" method="_on_level_end_timer_timeout"]
